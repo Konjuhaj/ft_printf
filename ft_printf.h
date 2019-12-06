@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/06 10:24:10 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/06 13:12:44 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,25 @@
 typedef	struct	s_data
 {
 	int			i;
+	int			param;
 	char		*container;
-	char		type;
 	va_list		*arg;
+	char		flag;
+	char		width;
+	int			precision;
+	int			length;
+	char		type;
 }				t_data;
 
-int				is_parameter(const char *s, va_list *args, t_data *data);
+int				is_parameter(const char *s, t_data *data);
 
-int				is_flag(char c);
+int				is_flag(char s, t_data *data);
 
-int				is_width(char c);
+int				is_width(char c, t_data *data);
 
-int				is_precision(char c);
+int				is_precision(char c, t_data *data);
 
-int				is_legth(const char *s);
+int				is_legth(const char *s, t_data *data);
 
 
 #endif

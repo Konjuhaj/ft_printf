@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
+#    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/06 10:28:43 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/06 11:59:10 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c flags.c libft/*.c
+SRC = ft_printf.c flags.c libft/ft_putchar.c
 
-OBJ = $(subst .c,.o,$(SRC))
+OBJ = *.o #$(subst .c,.o,$(SRC))
 
 .PHONY = all clean fclean re
 
