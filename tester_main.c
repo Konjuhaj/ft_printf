@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/06 21:45:19 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/06 21:53:42 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(void)
 	str4 = "FOUR";
 
 	ft_putaddr(str2);
-	printf("\n%p", str2);
+	printf("\n%x", (int)str2);
 	// ft_printf("%4$s, bthis %1$s, get %1$s, also get%2$s this %3$s\n", str1, str2, str3, str4);
 	// printf("%4$sr, bthis %1$s, get %1$s, also get%2$s this %3$s\n", str1, str2, str3, str4);
 	return (0);
