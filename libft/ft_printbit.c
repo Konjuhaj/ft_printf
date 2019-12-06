@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printbit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 18:13:51 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/10/30 18:20:44 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/06 10:29:24 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@ void	ft_printbit(int n)
 	i = 128;
 	while (i > 0)
 	{
-		if (n >= i)
-		{
-			write(1, "1", 1);
-			n = n % i;
-		}
-		else
-			write(1, "0", 1);
+		ft_putchar(*(n >= i ? "1" : "0"));
+		n = n >= i ? n % i : n;
 		i /= 2;
 	}
 }
