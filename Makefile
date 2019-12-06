@@ -3,34 +3,67 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
+#    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/06 11:59:10 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/06 21:44:17 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c flags.c libft/ft_putchar.c
+SRC_PATH = ./srcs/
+SRCS_FILES = ft_printf.c flags.c ft_putnbr_base.c
+SRC = $(addprefix $(SRC_PATH), $(SRCS_FILES))
 
-OBJ = *.o #$(subst .c,.o,$(SRC))
+OBJECTS_PATH = ./objs/
+OBJECTS_FILES = $(subst .c,.o,$(SRCS_FILES))
+OBJECTS = $(addprefix $(OBJECTS_PATH), $(OBJECTS_FILES))
 
-.PHONY = all clean fclean re
+LIB_SRCS_PATH = ./libft/
+LIB_SRC_FILES = ft_putchar.c ft_putendl.c ft_strncpy.c ft_isalnum.c ft_atoi.c ft_putstr.c
+LIB_SRC = $(addprefix $(LIB_SRCS_PATH), $(LIB_SRC_FILES))
 
-FLAGS = -Wall -Werror -Wextra
+LIB_OBJECTS_PATH =./objs/
+LIB_OBJECTS_FILES = $(subst .c,.o,$(LIB_SRC_FILES))
+LIB_OBJECTS = $(addprefix $(LIB_OBJECTS_PATH), $(LIB_OBJECTS_FILES))
+
+COMPILE = gcc -Wall -Werror -Wextra
+
+INCLUDES = -I ./includes/
+HEADER_PATH = ./includes/
+HEADER_FILES = ft_printf.h
+HEADERS = $(addprefix $(HEADER_PATH), $(HEADER_FILES))
+
+COLOR_RESET = \033[0m
+COLOR_PENDING = \033[0;33m
+COLOR_SUCCESS = \033[0;32m
+COLOR_DEFAULT = \033[1;34m
 
 all: $(NAME)
 
-$(NAME):
-		@gcc $(FLAGS) -c $(SRC)
-		@ar rc $(NAME) $(OBJ)
+$(NAME): $(OBJECTS) $(LIB_OBJECTS) $(HEADERS)
+		@echo "$(NAME)	[$(COLOR_PENDING)Complining...$(COLOR_RESET)]"
+		@ar rc $(NAME) $(OBJECTS) $(LIB_OBJECTS)
 		@ranlib $(NAME)
+		@echo "$(NAME)	[$(COLOR_SUCCESS)OK$(COLOR_RESET)]"
+		@echo "		[$(COLOR_SUCCESS)FINISHED$(COLOR_RESET)]"
+
+$(OBJECTS_PATH)%.o: $(SRC_PATH)%.c
+		@mkdir $(OBJECTS_PATH) 2>/dev/null || echo "" > /dev/null
+		@$(COMPILE) $(INCLUDES) -c $< -o $@
+
+$(LIB_OBJECTS_PATH)%.o: $(LIB_SRCS_PATH)%.c
+		@mkdir $(LIB_OBJECTS_PATH) 2>/dev/null || echo "" > /dev/null
+		@$(COMPILE) $(INCLUDES) -c $< -o $@
 
 clean:
-		@/bin/rm -f *.o
+		@rm -fv $(OBJECTS) > /dev/null
+		@rm -rf $(OBJECTS_PATH) > /dev/null
 
 fclean: clean
-		@/bin/rm -f $(NAME)
+		@rm -fv $(NAME) > /dev/null
 
 re: fclean all
+
+.PHONY = all clean fclean re
