@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/06 21:43:34 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/08 14:08:12 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,16 @@ void	ft_putnbr_base(long long num, int base)
 	}
 }
 
-void	ft_putaddr(void *str)
+void	ft_putaddr(void *str, int identifier)
 {
 	unsigned long long num;
 
 	num = (unsigned long long)str;
-	ft_putstr("0x");
-	ft_putnbr_base(num, HEXAL);
+	if (identifier == 1)
+	{
+		ft_putstr("0x");
+		ft_putnbr_base(num, HEXAL);
+	}
+	else if (identifier == 2)
+		ft_putnbr_base(num, HEXAL);
 }

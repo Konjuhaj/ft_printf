@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tester_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/06 21:53:42 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/08 14:09:01 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
+#include "includes/ft_printf.h"
 #include <stdio.h>
 
 int main(void)
@@ -25,8 +25,8 @@ int main(void)
 	str3 = "THREE";
 	str4 = "FOUR";
 
-	ft_putaddr(str2);
-	printf("\n%x", (int)str2);
+	ft_putnbr_base((int)str1, HEXAL);
+	printf("\n%x", (int)str1);
 	// ft_printf("%4$s, bthis %1$s, get %1$s, also get%2$s this %3$s\n", str1, str2, str3, str4);
 	// printf("%4$sr, bthis %1$s, get %1$s, also get%2$s this %3$s\n", str1, str2, str3, str4);
 	return (0);
