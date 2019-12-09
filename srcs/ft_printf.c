@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/06 21:43:32 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/08 23:39:36 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void	parameter(int num, va_list args)
 
 int		is_type(char s, t_data *data)
 {
-	if (s == 'd' || s == 'i' || s == 'u' || s == 'f' ||
-			s == 'x' || s == 'X' || s == 'o' ||
-			s == 's' || s == 'c' || s == 'p')
+	if (s == 'd' || s == 'i' || s == 'u'
+		|| s == 'f' || s == 'x' || s == 'X'
+		|| s == 'o' || s == 's' || s == 'c'
+		|| s == 'p')
 	{
 		data->type = s;
 		return (1);
@@ -37,41 +38,61 @@ int		is_type(char s, t_data *data)
 	return (0);
 }
 
-int		get_container(const char *src, int i)
+void	function_array(void (*f[])())
 {
-	t_data data;
 
-	data.i = i + 1;
-	if (is_parameter(src + data.i, &data))
-		data.i += 2;
-	if (is_flag(src[data.i], &data))
-		data.i++;
-	if (is_width(src[data.i], &data))
-		data.i++;
-	if (is_precision(src[data.i], &data))
-		data.i++;
-	if (is_legth(src, &data))
-		data.i++;
-	if (is_type(src[data.i], &data))
-		data.i++;
-	if (!(data.container = (char *)malloc(sizeof(char) * (data.i - i + 1))))
-		return (0);
-	ft_strncpy(data.container, src + i, data.i - i + 1);
-	ft_putendl(data.container);
-	return (data.i);
+	f['c'] = &ft_printchar;
+	f['s'] = &ft_printstr;
+	f['x'] = &ft_printnum;
+	f['X'] = &ft_printnum;
+	f['o'] = &ft_printnum;
+	f['p'] = &ft_printnum;
+	f['i'] = &ft_printnum;
+	f['d'] = &ft_printnum;
 }
 
-void	ft_printf(const char *str, ...)
+int		get_container(const char *src, t_data *data, int i)
 {
-	va_list	args;
+	void	(*function[126])(t_data *data, int id);
+
+	function_array(function);
+	data->i = i + 1;
+	if (is_parameter(src + data->i, data))
+		data->i += 2;
+	if (is_flag(src[data->i], data))
+		data->i++;
+	if (is_width(src[data->i], data))
+		data->i++;
+	if (is_precision(src[data->i], data))
+		data->i++;
+	if (is_legth(src, data))
+		data->i++;
+	if (is_type(src[data->i], data))
+		data->i++;
+	if (!(data->container = (char *)malloc(sizeof(char) * (data->i - i + 1))))
+		return (0);
+	ft_strncpy(data->container, src + i, data->i - i);
+	if (data->type == 'd')
+		ft_putnbr_base(va_arg(data->arg, long long), DECIMAL);
+	if (data->type == 'o')
+		ft_putnbr_base(va_arg(data->arg, long long), OCTAL);
+	if (data->type == 'x')
+		ft_putnbr_base(va_arg(data->arg, long long), HEXAL);
+	return (data->i);
+}
+
+void	ft_printf(const char *format, ...)
+{
+	t_data	f;
 	int		i;
 
 	i = -1;
-	va_start(args, str);
-	while (str[++i])
+	va_start(f.arg, format);
+	while (format[++i])
 	{
-		if (str[i] == '%')
-			i = get_container(str, i);
+		if (format[i] == '%')
+			i = get_container(format, &f, i);
+		ft_putchar(format[i]);
 	}
-	va_end(args);
+	va_end(f.arg);
 }

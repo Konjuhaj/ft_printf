@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/08 14:08:12 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/08 23:18:17 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,34 @@ void	ft_putnbr_base(long long num, int base)
 		n = num >= 10 ? num + 'a' - 10 : num + 48;
 		ft_putchar(n);
 	}
-	n = 128;
-	while (n > 0 && base == 2)
-	{
-		ft_putchar(*(num >= n ? "1" : "0"));
-		num = num >= n ? num % n : num;
-		n /= 2;
-	}
 }
 
-void	ft_putaddr(void *str, int identifier)
+void	ft_printnum(t_data *data, int id)
 {
 	unsigned long long num;
 
-	num = (unsigned long long)str;
-	if (identifier == 1)
+	num = (unsigned long long)(va_arg(data->arg, void *));
+	if (id == 'p')
 	{
 		ft_putstr("0x");
 		ft_putnbr_base(num, HEXAL);
 	}
-	else if (identifier == 2)
+	else if (id == 'x')
 		ft_putnbr_base(num, HEXAL);
+	else if (id == 'i' || id == 'd')
+		ft_putnbr_base(num, DECIMAL);
+	else if(id == 'o')
+		ft_putnbr_base(num, OCTAL);
+}
+
+void	ft_printchar(t_data *data, int id)
+{
+	if (id)
+		ft_putchar(va_arg(data->arg, int));
+}
+
+void	ft_printstr(t_data *data, int id)
+{
+	if (id)
+		ft_putstr(va_arg(data->arg, char *));
 }

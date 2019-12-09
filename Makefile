@@ -6,14 +6,14 @@
 #    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/06 21:44:17 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/08 22:37:57 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC_PATH = ./srcs/
-SRCS_FILES = ft_printf.c flags.c ft_putnbr_base.c
+SRCS_FILES = ft_printf.c flags.c ft_printer.c
 SRC = $(addprefix $(SRC_PATH), $(SRCS_FILES))
 
 OBJECTS_PATH = ./objs/
@@ -21,7 +21,8 @@ OBJECTS_FILES = $(subst .c,.o,$(SRCS_FILES))
 OBJECTS = $(addprefix $(OBJECTS_PATH), $(OBJECTS_FILES))
 
 LIB_SRCS_PATH = ./libft/
-LIB_SRC_FILES = ft_putchar.c ft_putendl.c ft_strncpy.c ft_isalnum.c ft_atoi.c ft_putstr.c
+LIB_SRC_FILES = ft_putchar.c ft_putendl.c ft_strncpy.c ft_isalnum.c ft_atoi.c ft_putstr.c \
+				ft_isdigit.c ft_isalpha.c
 LIB_SRC = $(addprefix $(LIB_SRCS_PATH), $(LIB_SRC_FILES))
 
 LIB_OBJECTS_PATH =./objs/
