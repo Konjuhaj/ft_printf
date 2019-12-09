@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 12:00:23 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:34:31 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		is_type(char s, t_data *data)
 	if (s == 'd' || s == 'i' || s == 'u'
 		|| s == 'f' || s == 'x' || s == 'X'
 		|| s == 'o' || s == 's' || s == 'c'
-		|| s == 'p')
+		|| s == 'p' || s == '%')
 	{
 		data->type = s;
 		return (1);
@@ -50,6 +50,7 @@ void	function_array(void (*f[])())
 	f['i'] = &ft_printnum;
 	f['d'] = &ft_printnum;
 	f['u'] = &ft_printnum;
+	f['%'] = &ft_printcent;
 }
 
 int		get_container(const char *src, t_data *data, int i)
@@ -60,7 +61,7 @@ int		get_container(const char *src, t_data *data, int i)
 	data->i = i + 1;
 	if (is_parameter(src + data->i, data))
 		data->i += 2;
-	if (is_flag(src[data->i], data))
+	if (is_flag(src + data->i, data))
 		data->i++;
 	if (is_width(src[data->i], data))
 		data->i++;
@@ -70,24 +71,30 @@ int		get_container(const char *src, t_data *data, int i)
 		data->i++;
 	if (is_type(src[data->i], data))
 		data->i++;
-	if (!(data->container = (char *)malloc(sizeof(char) * (data->i - i + 1))))
-		return (0);
+	if (data->flag > 0)
+		ft_printflag(data);
 	function[(int)data->type](data, data->type);
+	if (data->flag < 0)
+		ft_printflag(data);
 	return (data->i);
 }
 
-void	ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
 	t_data	f;
 	int		i;
 
 	i = -1;
+	f.ret = 0;
 	va_start(f.arg, format);
 	while (format[++i])
 	{
 		if (format[i] == '%')
-			i = get_container(format, &f, i);
+			if (ft_strlen(format) <= (size_t)(i = get_container(format, &f, i)))
+				break ;
+		f.ret++;
 		ft_putchar(format[i]);
 	}
 	va_end(f.arg);
+	return (f.ret);
 }

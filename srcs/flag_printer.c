@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester_main.c                                      :+:      :+:    :+:   */
+/*   flag_printer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 18:45:52 by bkonjuha         ###   ########.fr       */
+/*   Created: 2019/12/09 17:42:39 by bkonjuha          #+#    #+#             */
+/*   Updated: 2019/12/09 18:48:33 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
+#include "../includes/ft_printf.h"
 
-int main(void)
+int		ncount(int n)
 {
-	char *str1;
-	char *str2;
-	char *str3;
-	char *str4;
-	int one = 1220000;
-	int two;
-	int three;
-	char c = 'c';
+	int		i;
+	long	nb;
 
+	nb = n;
+	i = 0;
+	if (nb == 0)
+	{
+		i++;
+	}
+	while (nb > 0 || nb < 0)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
 
-	str1 = "ONE";
-	str2 = "TWO";
-	str3 = "THREE";
-	str4 = "FOUR";
-
-	ft_printf("%-5%");
-	return (0);
+void	ft_printflag(t_data *data)
+{
+	if (data->flag < 0)
+		data->flag *= -1;
+	data->ret += data->flag - 1;
+	while (--data->flag)
+		ft_putchar(' ');
 }

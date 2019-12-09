@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 09:53:42 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:17:12 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@
 
 typedef	struct	s_data
 {
+	int			ret;
 	int			i;
 	int			param;
 	char		*container;
 	va_list		arg;
-	char		flag;
+	int		flag;
 	char		width;
 	int			precision;
 	int			length;
 	char		type;
 }				t_data;
 
-void			ft_printf(const char *format, ...);
+int				ft_printf(const char *format, ...);
 
 int				is_parameter(const char *s, t_data *data);
 
-int				is_flag(char s, t_data *data);
+int				is_flag(const char *c, t_data *data);
 
 int				is_width(char c, t_data *data);
 
@@ -47,10 +48,16 @@ int				is_legth(const char *s, t_data *data);
 
 void			ft_printnum(t_data *data, int id);
 
-void			ft_putnbr_base(long long num, int base);
+void			ft_putnbr_base(long long num, int base, t_data *data);
 
 void			ft_printchar(t_data *data, int id);
 
 void			ft_printstr(t_data *data, int id);
+
+void			ft_printcent(t_data *data, int id);
+
+void			ft_printflag(t_data *data);
+
+int				ncount(int n);
 
 #endif
