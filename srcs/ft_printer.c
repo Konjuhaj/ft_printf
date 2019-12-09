@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/08 23:18:17 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/09 14:43:26 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ void	ft_printnum(t_data *data, int id)
 	}
 	else if (id == 'x')
 		ft_putnbr_base(num, HEXAL);
-	else if (id == 'i' || id == 'd')
+	else if (id == 'i' || id == 'd' || id == 'u')
 		ft_putnbr_base(num, DECIMAL);
-	else if(id == 'o')
+	else if (id == 'o')
 		ft_putnbr_base(num, OCTAL);
+	else if (id == 'b')
+		ft_printbit((int)num);
 }
 
 void	ft_printchar(t_data *data, int id)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/08 23:39:36 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/09 12:00:23 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	function_array(void (*f[])())
 	f['p'] = &ft_printnum;
 	f['i'] = &ft_printnum;
 	f['d'] = &ft_printnum;
+	f['u'] = &ft_printnum;
 }
 
 int		get_container(const char *src, t_data *data, int i)
@@ -65,19 +66,13 @@ int		get_container(const char *src, t_data *data, int i)
 		data->i++;
 	if (is_precision(src[data->i], data))
 		data->i++;
-	if (is_legth(src, data))
+	if (is_legth(src + data->i, data))
 		data->i++;
 	if (is_type(src[data->i], data))
 		data->i++;
 	if (!(data->container = (char *)malloc(sizeof(char) * (data->i - i + 1))))
 		return (0);
-	ft_strncpy(data->container, src + i, data->i - i);
-	if (data->type == 'd')
-		ft_putnbr_base(va_arg(data->arg, long long), DECIMAL);
-	if (data->type == 'o')
-		ft_putnbr_base(va_arg(data->arg, long long), OCTAL);
-	if (data->type == 'x')
-		ft_putnbr_base(va_arg(data->arg, long long), HEXAL);
+	function[(int)data->type](data, data->type);
 	return (data->i);
 }
 
