@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 18:49:28 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/11 21:39:38 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,39 @@ int		is_parameter(const char *s, t_data *data)
 
 int		is_flag(const char *c, t_data *data)
 {
+	int i;
+
+	i = 0;
 	data->flag = 0;
-	if (*c == '+' || *c == '-' || *c == '#' || ft_isdigit(*c))
+	data->hash = *c;
+	while (c[i] == ' ' || c[i] == '#' || c[i] == '0')
+		i++;
+	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))
 	{
-		data->flag = ft_atoi(c);
-		data->i += data->flag < 0 ? ncount(data->flag) : ncount(data->flag) - 1;
+		data->flag = ft_atoi(c + i);
+		data->container = get_buffer(data->flag, data->hash == 48 ? '0' : ' ');
+		data->i += data->flag < 0 ? ncount(data->flag) + i - 1: ncount(data->flag) + i - 1;
+		return (1);
+	}
+	data->i += i;
+	return (0);
+}
+
+int		is_width(const char *s, t_data *data)
+{
+	if (*s == '*')
+	{
+		data->width = *s;
 		return (1);
 	}
 	return (0);
 }
 
-int		is_width(char c, t_data *data)
+int		is_precision(const char *s, t_data *data)
 {
-	if (c == '*')
+	if (*s == '.' || *s == '*')
 	{
-		data->width = c;
-		return (1);
-	}
-	return (0);
-}
-
-int		is_precision(char c, t_data *data)
-{
-	if (c == '.' || c == '*')
-	{
-		data->precision = c;
+		data->precision = *s;
 		return (1);
 	}
 	return (0);

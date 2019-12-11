@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 18:17:12 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/11 16:34:38 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 
 typedef	struct	s_data
 {
+	char		hash;
 	int			ret;
 	int			i;
 	int			param;
 	char		*container;
 	va_list		arg;
-	int		flag;
+	int			flag;
 	char		width;
 	int			precision;
 	int			length;
@@ -40,15 +41,17 @@ int				is_parameter(const char *s, t_data *data);
 
 int				is_flag(const char *c, t_data *data);
 
-int				is_width(char c, t_data *data);
+int				is_width(const char *s, t_data *data);
 
-int				is_precision(char c, t_data *data);
+int				is_precision(const char *s, t_data *data);
 
 int				is_legth(const char *s, t_data *data);
 
-void			ft_printnum(t_data *data, int id);
+void			ft_printhex(t_data *data, int id);
 
-void			ft_putnbr_base(long long num, int base, t_data *data);
+void			ft_printoct(t_data *data, int id);
+
+void			ft_printdec(t_data *data, int id);
 
 void			ft_printchar(t_data *data, int id);
 
@@ -56,8 +59,7 @@ void			ft_printstr(t_data *data, int id);
 
 void			ft_printcent(t_data *data, int id);
 
-void			ft_printflag(t_data *data);
+char			*get_buffer(int n, int filler);
 
-int				ncount(int n);
 
 #endif

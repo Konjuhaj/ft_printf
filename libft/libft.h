@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 08:13:08 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/10/31 09:25:56 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/11 16:27:51 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 
 char				**ft_strsplit(char const *s, char c);
 
-char				*ft_itoa(int n);
+char				*ft_itoa(long long n);
 
 void				ft_putendl(char const *s);
 
@@ -160,5 +160,13 @@ int					ft_isblank(int c);
 int					ft_iscntrl(int c);
 
 int					ft_isxdigit(int c);
+
+void				ft_putnbr_base(long long num, int base, int id);
+
+char				*ft_itoa_base(long long num, int base);
+
+int					ncount(int n);
+
+void				ft_capitalize(char *s);
 
 #endif

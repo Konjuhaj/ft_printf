@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 18:45:52 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/11 22:41:02 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,25 @@ int main(void)
 	str3 = "THREE";
 	str4 = "FOUR";
 
-	ft_printf("%-5%");
+  	// ft_printf("%010x\n", 542);
+	// printf("%###000000000000000000010x\n\n", 542);
+
+	// ft_printf("%5%\n");
+	// printf("%5%\n\n");
+
+	// ft_printf("%s%s%s%s%s", "this", "is", "a", "multi", "string");
+	// printf("\n%s%s%s%s%s", "this", "is", "a", "multi", "string");
+
+//   ft_printf("%d", 2147483649);
+//   printf("\n%d", (int)2147483649);
+
+
+	// ft_printf("%-5c", 42);
+	// printf("\n%-5c", 42);
+
+	ft_printf("%lu", -42);
+	printf("\n%lu", (unsigned long)-42);
+
+
 	return (0);
 }

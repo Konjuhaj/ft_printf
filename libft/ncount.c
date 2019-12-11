@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_printer.c                                     :+:      :+:    :+:   */
+/*   ncount.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/09 17:42:39 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/09 18:48:33 by bkonjuha         ###   ########.fr       */
+/*   Created: 2019/12/11 14:20:14 by bkonjuha          #+#    #+#             */
+/*   Updated: 2019/12/11 14:20:42 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "libft.h"
 
 int		ncount(int n)
 {
@@ -19,7 +19,7 @@ int		ncount(int n)
 
 	nb = n;
 	i = 0;
-	if (nb == 0)
+	if (nb <= 0)
 	{
 		i++;
 	}
@@ -29,13 +29,4 @@ int		ncount(int n)
 		i++;
 	}
 	return (i);
-}
-
-void	ft_printflag(t_data *data)
-{
-	if (data->flag < 0)
-		data->flag *= -1;
-	data->ret += data->flag - 1;
-	while (--data->flag)
-		ft_putchar(' ');
 }
