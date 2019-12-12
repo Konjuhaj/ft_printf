@@ -6,7 +6,7 @@
 #    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 08:09:19 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/11 16:35:02 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/12 11:23:30 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS=ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c ft_lstdel.c \
 		ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_lstputstr.c ft_isspace.c \
 		ft_wlen.c ft_wcount.c ft_printbit.c ft_lstsplit.c ft_putnbr_base.c \
-		ft_itoa_base.c ft_capitalize.c ncount.c
+		ft_itoa_base.c ft_capitalize.c ncount.c ft_uitoa_base.c
 OBJS=$(subst .c,.o,$(SRCS))
 
 all: $(NAME)

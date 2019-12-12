@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 08:13:08 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/11 16:27:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 11:23:16 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,7 @@ char				*ft_itoa_base(long long num, int base);
 int					ncount(int n);
 
 void				ft_capitalize(char *s);
+
+char				*ft_uitoa_base(unsigned long long nb, int base);
 
 #endif
