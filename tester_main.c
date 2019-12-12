@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 10:47:36 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 11:33:58 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int main(void)
 	// ft_printf("%-5c", 42);
 	// printf("\n%-5c", 42);
 
-	ft_printf("%lu", -42);
-	printf("\n%lu", (unsigned long)-42);
+ft_printf("%5u", 4294967295);
 
 
 	return (0);

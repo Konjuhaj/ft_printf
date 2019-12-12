@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 11:22:45 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 11:43:22 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,16 @@ void	ft_printhex(t_data *data, int id)
 		ft_capitalize(data->container);
 	data->ret += ft_strlen(data->container);
 }
-
 void	ft_printdec(t_data *data, int id)
 {
 	long long num;
-	unsigned long midnum;
-	unsigned long long bignum;
 
-	midnum = 0;
-	if (id == 'u' && data->length == 'l' + 'l')
-		bignum = va_arg(data->arg, unsigned long long);
-	else if(id == 'u' && data->length == 'l')
-	 	num = va_arg(data->arg, int);
-	else
+	if (id)
 		num = va_arg(data->arg, long long);
 	if (data->length == 'h')
 		num = (short)num;
 	else if (data->length == 'h' + 'h')
 		num = (char)num;
-	else if(data->length == 'l' && id == 'u')
-	{
-		midnum = (unsigned long)num;
-		bignum = midnum;
-	}
 	else if (data->length == 'l')
 		num = (long)num;
 	else if (id == 'd' && data->length == 0)
@@ -91,12 +78,11 @@ void	ft_printdec(t_data *data, int id)
 	else if (id == 'u' && data->length == 0)
 		num = (unsigned int)num;
 	if(!(data->container))
-		data->container = !bignum ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
+		data->container = ft_itoa_base(num, DECIMAL);
 	else
-		fill_container(ft_itoa_base(!num ? bignum : num, DECIMAL), data);
+		fill_container(ft_itoa_base(num, DECIMAL), data);
 	data->ret += ft_strlen(data->container);
 }
-
 void	ft_printoct(t_data *data, int id)
 {
 	long long num;
