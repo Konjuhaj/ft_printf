@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/11 21:39:38 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:47:29 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int		is_flag(const char *c, t_data *data)
 
 	i = 0;
 	data->flag = 0;
-	data->hash = *c;
+	data->filler = *c;
 	while (c[i] == ' ' || c[i] == '#' || c[i] == '0')
 		i++;
 	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))
 	{
 		data->flag = ft_atoi(c + i);
-		data->container = get_buffer(data->flag, data->hash == 48 ? '0' : ' ');
+		data->container = get_buffer(data->flag, data->filler == 48 ? '0' : ' ');
 		data->i += data->flag < 0 ? ncount(data->flag) + i - 1: ncount(data->flag) + i - 1;
 		return (1);
 	}

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_uitoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:54:06 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 11:25:29 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 15:56:15 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		uncount_base(long long n, int base)
+int		uncount_base(unsigned long long n, int base)
 {
-	int		i;
+	int					i;
 	unsigned long long	nb;
 
 	nb = n;

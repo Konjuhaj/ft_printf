@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 11:39:50 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:33:56 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			if (ft_strlen(format) <= (size_t)(i = get_container(format, &f, i)))
+			i = get_container(format, &f, i);
+			free(f.container);
+			f.container = NULL;
+			if (ft_strlen(format) <= (size_t)i)
 				break ;
-			ft_strdel(&(f.container));
 			continue ;
 		}
 		f.ret++;

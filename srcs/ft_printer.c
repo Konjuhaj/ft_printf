@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 11:43:22 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:31:41 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*get_buffer(int n, int filler)
 
 void	fill_container(char *c, t_data *data)
 {
-	size_t start;
-	size_t destlen;
+	size_t	start;
+	size_t	destlen;
 	size_t	srclen;
 
 	destlen = ft_strlen(data->container);
@@ -39,9 +39,11 @@ void	fill_container(char *c, t_data *data)
 	else
 		ft_strncpy(data->container, c, srclen);
 }
+
 void	ft_printhex(t_data *data, int id)
 {
-	long long num;
+	long long	num;
+	char 		*temp;
 
 	if (id)
 		num = va_arg(data->arg, long long);
@@ -53,39 +55,55 @@ void	ft_printhex(t_data *data, int id)
 		num = (long)num;
 	else if (data->length != 'l' + 'l')
 		num = (unsigned int)num;
-	if(!(data->container))
+	if (!(data->container))
 		data->container = ft_itoa_base(num, HEXAL);
 	else
-		fill_container(ft_itoa_base(num, HEXAL), data);
+	{
+		temp = ft_itoa_base(num, HEXAL);
+		fill_container(temp, data);
+		free(temp);
+	}
 	if (data->type == 'X')
 		ft_capitalize(data->container);
 	data->ret += ft_strlen(data->container);
 }
+
 void	ft_printdec(t_data *data, int id)
 {
-	long long num;
+	long long	num;
+	unsigned long	bignum;
+	char		*temp;
 
-	if (id)
+	bignum = 0;
+	if (id == 'u' && data->length == 'l')
+		bignum = va_arg(data->arg, unsigned long);
+	else
 		num = va_arg(data->arg, long long);
 	if (data->length == 'h')
 		num = (short)num;
 	else if (data->length == 'h' + 'h')
 		num = (char)num;
-	else if (data->length == 'l')
+	else if (data->length == 'l' && id != 'u')
 		num = (long)num;
 	else if (id == 'd' && data->length == 0)
 		num = (int)num;
 	else if (id == 'u' && data->length == 0)
 		num = (unsigned int)num;
-	if(!(data->container))
-		data->container = ft_itoa_base(num, DECIMAL);
+	if (!(data->container))
+		data->container = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
 	else
-		fill_container(ft_itoa_base(num, DECIMAL), data);
+	{
+		temp = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
+		fill_container(temp, data);
+		free(temp);
+	}
 	data->ret += ft_strlen(data->container);
 }
+
 void	ft_printoct(t_data *data, int id)
 {
-	long long num;
+	long long	num;
+	char		*temp;
 
 	if (id)
 		num = va_arg(data->arg, long long);
@@ -97,10 +115,14 @@ void	ft_printoct(t_data *data, int id)
 		num = (long)num;
 	else if (data->length != 'l' + 'l')
 		num = (unsigned int)num;
-	if(!(data->container))
+	if (!(data->container))
 		data->container = ft_itoa_base(num, OCTAL);
 	else
-		fill_container(ft_itoa_base(num, OCTAL), data);
+	{
+		temp = ft_itoa_base(num, OCTAL);
+		fill_container(temp, data);
+		free(temp);
+	}
 	data->ret += ft_strlen(data->container);
 }
 
@@ -116,8 +138,11 @@ void	ft_printoct(t_data *data, int id)
 
 void	ft_printcent(t_data *data, int id)
 {
-	if(!(data->container) && id)
-		data->container = "%";
+	if (!(data->container) && id)
+	{
+		data->container = (char *)malloc(sizeof(char) * 2);
+		data->container[0] = '%';
+	}
 	else
 		fill_container("%", data);
 	data->ret += ft_strlen(data->container);
@@ -131,10 +156,13 @@ void	ft_printchar(t_data *data, int id)
 	if (id)
 		c[0] = va_arg(data->arg, int);
 	c[2] = '\0';
-	if(!(data->container) && id)
+	if (!(data->container) && id)
 		data->container = c;
 	else
+	{
 		fill_container(c, data);
+		free(c);
+	}
 	data->ret += ft_strlen(data->container);
 }
 
@@ -145,12 +173,12 @@ void	ft_printstr(t_data *data, int id)
 	s = va_arg(data->arg, char *);
 	if (id)
 	{
-	if (!s)
-		s = "(null)";
-	if(!(data->container) && id)
-		data->container = ft_strdup(s);
-	else
-		fill_container(s, data);
-	data->ret += ft_strlen(data->container);
+		if (!s)
+			s = "(null)";
+		if (!(data->container) && id)
+			data->container = ft_strdup(s);
+		else
+			fill_container(s, data);
+		data->ret += ft_strlen(data->container);
 	}
 }
