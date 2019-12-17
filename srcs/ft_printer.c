@@ -3,63 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 16:31:41 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/14 09:22:24 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*get_buffer(int n, int filler)
+void	ft_typecast(t_data *data, long long *num, int id)
 {
-	char *buffer;
-
-	if (n < 0)
-		n *= -1;
-	buffer = (char *)malloc(sizeof(char) * n + 1);
-	ft_memset(buffer, filler, n);
-	return (buffer);
+	*num = va_arg(data->arg, long long);
+	if (data->length == 'h')
+		*num = (short)*num;
+	else if (data->length == 'h' + 'h')
+		*num = (char)*num;
+	else if (data->length == 'l')
+		*num = (long)*num;
+	if (id == 'd' && data->length == 0)
+		*num = (int)*num;
 }
-
-void	fill_container(char *c, t_data *data)
+void	ft_u_typecast(t_data *data, unsigned long *bignum)
 {
-	size_t	start;
-	size_t	destlen;
-	size_t	srclen;
-
-	destlen = ft_strlen(data->container);
-	srclen = ft_strlen(c);
-	if (data->flag > 0)
-	{
-		start = destlen - srclen > 0 ? destlen - srclen : 0;
-		ft_strncpy(data->container + start, c, destlen - start);
-	}
-	else
-		ft_strncpy(data->container, c, srclen);
+	*bignum = va_arg(data->arg, unsigned long);
+	if (data->length == 'h')
+		*bignum = (unsigned short)*bignum;
+	else if (data->length == 'h' + 'h')
+		*bignum = (unsigned char)*bignum;
+	else if (data->length == 0)
+		*bignum = (unsigned int)*bignum;
 }
 
 void	ft_printhex(t_data *data, int id)
 {
 	long long	num;
 	char 		*temp;
+	unsigned long bignum;
 
-	if (id)
-		num = va_arg(data->arg, long long);
-	if (data->length == 'h')
-		num = (short)num;
-	else if (data->length == 'h' + 'h')
-		num = (char)num;
-	else if (data->length == 'l')
-		num = (long)num;
-	else if (data->length != 'l' + 'l')
-		num = (unsigned int)num;
+	bignum = 0;
+	if (id == 'u' || id == 'x' || data->length == 'l' + 'l')
+		ft_u_typecast(data, &bignum);
+	else
+		ft_typecast(data, &num, id);
+	temp = bignum == 0 ? ft_itoa_base(num, HEXAL) : ft_uitoa_base(bignum, HEXAL);
 	if (!(data->container))
-		data->container = ft_itoa_base(num, HEXAL);
+		data->container = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
 	else
 	{
-		temp = ft_itoa_base(num, HEXAL);
 		fill_container(temp, data);
 		free(temp);
 	}
@@ -75,25 +66,15 @@ void	ft_printdec(t_data *data, int id)
 	char		*temp;
 
 	bignum = 0;
-	if (id == 'u' && data->length == 'l')
-		bignum = va_arg(data->arg, unsigned long);
+	if (id == 'u')
+		ft_u_typecast(data, &bignum);
 	else
-		num = va_arg(data->arg, long long);
-	if (data->length == 'h')
-		num = (short)num;
-	else if (data->length == 'h' + 'h')
-		num = (char)num;
-	else if (data->length == 'l' && id != 'u')
-		num = (long)num;
-	else if (id == 'd' && data->length == 0)
-		num = (int)num;
-	else if (id == 'u' && data->length == 0)
-		num = (unsigned int)num;
+		ft_typecast(data, &num, id);
+	temp = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
 	if (!(data->container))
-		data->container = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
+		data->container = data->hash == '#' ? ft_strjoin("0", temp) : temp;
 	else
 	{
-		temp = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
 		fill_container(temp, data);
 		free(temp);
 	}
@@ -104,22 +85,18 @@ void	ft_printoct(t_data *data, int id)
 {
 	long long	num;
 	char		*temp;
+	unsigned long bignum;
 
-	if (id)
-		num = va_arg(data->arg, long long);
-	if (data->length == 'h')
-		num = (short)num;
-	else if (data->length == 'h' + 'h')
-		num = (char)num;
-	else if (data->length == 'l')
-		num = (long)num;
-	else if (data->length != 'l' + 'l')
-		num = (unsigned int)num;
+	bignum = 0;
+	if (id == 'u')
+		ft_u_typecast(data, &bignum);
+	else
+		ft_typecast(data, &num, id);
+	temp = bignum == 0 ? ft_itoa_base(num, OCTAL) : ft_uitoa_base(bignum, OCTAL);
 	if (!(data->container))
-		data->container = ft_itoa_base(num, OCTAL);
+		data->container = data->hash == '#' ? ft_strjoin("0o", temp) : temp;
 	else
 	{
-		temp = ft_itoa_base(num, OCTAL);
 		fill_container(temp, data);
 		free(temp);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 18:06:49 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/12 19:34:43 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,7 @@ int main(void)
 	str3 = "THREE";
 	str4 = "FOUR";
 
-// ft_printf("%-10x\n", 42);
-//   	ft_printf("%010x\n", 542);
-// // 	printf("%010x\n", 542);
-
-// 	ft_printf("%5%\n");
-// // 	printf("%5%\n");
-
-// 	ft_printf("%s%s%s%s%s", "this", "is", "a", "multi", "string\n");
-// // 	printf("%s%s%s%s%s", "this", "is", "a", "multi", "string\n");
-
-//   ft_printf("%d\n", 2147483649);
-// //   printf("%d\n", (int)2147483649);
-
-
-	ft_printf("%-5c\n", 42);
-// 	printf("%-5c\n", 42);
-
-//  	ft_printf("%010x\n", 542);
-//  	// printf("%010x\n", 542);
-
+ ft_printf("%#08x", 42);
 
 	system("\n\nLEAKS a.out\n\n");
 	return (0);
