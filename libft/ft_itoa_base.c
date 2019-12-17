@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:54:06 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/11 15:45:16 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:01:16 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,24 @@ int		ncount_base(long long n, int base)
 
 char	*ft_itoa_base(long long nb, int base)
 {
-	int		i;
-	char	*result;
+	int				i;
+	int				num;
+	char			*result;
 
 	i = ncount_base(nb, base);
+	if (nb == -9223372036854775807 - 1)
+		i = 20;
 	if (!(result = (char *)malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	result[i--] = '\0';
 	if (nb == 0)
-	{
 		result[0] = 48;
-		return (result);
-	}
 	if (nb < 0)
-	{
-		nb *= -1;
 		result[0] = '-';
-	}
-	while (nb > 0)
+	while (nb != 0)
 	{
-		result[i--] = nb % base >= 10 ? nb % base + 87 : nb % base + 48;
+		num = nb % base < 0 ? nb % base * -1 : nb % base;
+		result[i--] = num >= 10 ? num + 87 : num + 48;
 		nb = nb / base;
 	}
 	return (result);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/14 09:22:24 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:11:40 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_typecast(t_data *data, long long *num, int id)
 	if (id == 'd' && data->length == 0)
 		*num = (int)*num;
 }
+
 void	ft_u_typecast(t_data *data, unsigned long *bignum)
 {
 	*bignum = va_arg(data->arg, unsigned long);
@@ -37,18 +38,19 @@ void	ft_u_typecast(t_data *data, unsigned long *bignum)
 
 void	ft_printhex(t_data *data, int id)
 {
-	long long	num;
-	char 		*temp;
-	unsigned long bignum;
+	char			*temp;
+	unsigned long	bignum;
 
-	bignum = 0;
-	if (id == 'u' || id == 'x' || data->length == 'l' + 'l')
-		ft_u_typecast(data, &bignum);
-	else
-		ft_typecast(data, &num, id);
-	temp = bignum == 0 ? ft_itoa_base(num, HEXAL) : ft_uitoa_base(bignum, HEXAL);
+	ft_u_typecast(data, &bignum);
+	if (id)
+		temp = ft_uitoa_base(bignum, HEXAL);
 	if (!(data->container))
-		data->container = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
+	{
+		if (bignum != 0)
+			data->container = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
+		else
+			data->container = temp;
+	}
 	else
 	{
 		fill_container(temp, data);
@@ -61,16 +63,17 @@ void	ft_printhex(t_data *data, int id)
 
 void	ft_printdec(t_data *data, int id)
 {
-	long long	num;
+	long long		num;
 	unsigned long	bignum;
-	char		*temp;
+	char			*temp;
 
 	bignum = 0;
 	if (id == 'u')
 		ft_u_typecast(data, &bignum);
 	else
 		ft_typecast(data, &num, id);
-	temp = bignum == 0 ? ft_itoa_base(num, DECIMAL) : ft_uitoa_base(bignum, DECIMAL);
+	temp = id != 'u' ? ft_itoa_base(num, DECIMAL) :
+						ft_uitoa_base(bignum, DECIMAL);
 	if (!(data->container))
 		data->container = data->hash == '#' ? ft_strjoin("0", temp) : temp;
 	else
@@ -83,16 +86,17 @@ void	ft_printdec(t_data *data, int id)
 
 void	ft_printoct(t_data *data, int id)
 {
-	long long	num;
-	char		*temp;
-	unsigned long bignum;
+	long long		num;
+	char			*temp;
+	unsigned long	bignum;
 
 	bignum = 0;
 	if (id == 'u')
 		ft_u_typecast(data, &bignum);
 	else
 		ft_typecast(data, &num, id);
-	temp = bignum == 0 ? ft_itoa_base(num, OCTAL) : ft_uitoa_base(bignum, OCTAL);
+	temp = id != 'u' ? ft_itoa_base(num, OCTAL) :
+						ft_uitoa_base(bignum, OCTAL);
 	if (!(data->container))
 		data->container = data->hash == '#' ? ft_strjoin("0o", temp) : temp;
 	else

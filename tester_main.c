@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 19:34:43 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:45:17 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int main(void)
 	str3 = "THREE";
 	str4 = "FOUR";
 
- ft_printf("%#08x", 42);
-
+	ft_printf("%lld\n", -9223372036854775808);
 	system("\n\nLEAKS a.out\n\n");
 	return (0);
 }

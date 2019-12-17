@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 19:36:28 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:02:44 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int		is_flag(const char *c, t_data *data)
 	data->flag = 0;
 	while (c[i] == ' ' || c[i] == '#' || c[i] == '0')
 	{
-		data->hash = c[i] == '#' ? '#' : 0;
-		filler = c[i] == '0' ? '0' : 0;
+		if (data->hash != '#')
+			data->hash = c[i] == '#' ? '#' : 0;
+		if (filler != '0')
+			filler = c[i] == '0' ? '0' : 0;
 		i++;
 	}
 	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))
 	{
 		data->flag = ft_atoi(c + i);
+		while((c[i] == '-' || c[i] == '+') && c[i + 1] == '0')
+			i++;
 		data->container = get_buffer(data->flag, filler == 48 ? '0' : ' ');
 		data->i += data->flag < 0 ? ncount(data->flag) + i - 1: ncount(data->flag) + i - 1;
 		return (1);
