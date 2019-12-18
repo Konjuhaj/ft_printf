@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/14 08:24:42 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:55:51 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,11 @@ void			ft_printstr(t_data *data, int id);
 
 void			ft_printcent(t_data *data, int id);
 
-char			*get_buffer(int n, int filler);
+char			*get_buffer(int n, t_data *data);
 
 void			fill_container(char *c, t_data *data);
+
+char			*handle_prsecision(char *c, t_data *data);
+
 
 #endif

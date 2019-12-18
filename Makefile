@@ -6,7 +6,7 @@
 #    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/14 08:54:16 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/18 13:38:50 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ $(LIB_OBJECTS_PATH)%.o: $(LIB_SRCS_PATH)%.c
 clean:
 		@rm -fv $(OBJECTS) > /dev/null
 		@rm -rf $(OBJECTS_PATH) > /dev/null
+		@rm -f libft/*.o
 
 fclean: clean
 		@rm -fv $(NAME) > /dev/null

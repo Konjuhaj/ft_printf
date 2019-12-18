@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/17 18:11:40 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:12:02 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_printhex(t_data *data, int id)
 			data->container = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
 		else
 			data->container = temp;
+		if(data->precision > (int)ft_strlen(data->container) && ft_strlen(data->container) != 0)
+			data->container = handle_prsecision(data->container, data);
 	}
 	else
 	{
@@ -75,7 +77,11 @@ void	ft_printdec(t_data *data, int id)
 	temp = id != 'u' ? ft_itoa_base(num, DECIMAL) :
 						ft_uitoa_base(bignum, DECIMAL);
 	if (!(data->container))
+	{
 		data->container = data->hash == '#' ? ft_strjoin("0", temp) : temp;
+		if(data->precision > (int)ft_strlen(data->container) && ft_strlen(data->container) != 0)
+			data->container = handle_prsecision(data->container, data);
+	}
 	else
 	{
 		fill_container(temp, data);
@@ -86,19 +92,19 @@ void	ft_printdec(t_data *data, int id)
 
 void	ft_printoct(t_data *data, int id)
 {
-	long long		num;
 	char			*temp;
 	unsigned long	bignum;
 
 	bignum = 0;
-	if (id == 'u')
+	if (id)
 		ft_u_typecast(data, &bignum);
-	else
-		ft_typecast(data, &num, id);
-	temp = id != 'u' ? ft_itoa_base(num, OCTAL) :
-						ft_uitoa_base(bignum, OCTAL);
+	temp = ft_uitoa_base(bignum, OCTAL);
 	if (!(data->container))
+	{
 		data->container = data->hash == '#' ? ft_strjoin("0o", temp) : temp;
+		if(data->precision > (int)ft_strlen(data->container) && ft_strlen(data->container) != 0)
+			data->container = handle_prsecision(data->container, data);
+	}
 	else
 	{
 		fill_container(temp, data);
@@ -138,7 +144,14 @@ void	ft_printchar(t_data *data, int id)
 		c[0] = va_arg(data->arg, int);
 	c[2] = '\0';
 	if (!(data->container) && id)
+	{
+		if (!(*c))
+		{
+			ft_putchar(*c);
+			data->ret++;
+		}
 		data->container = c;
+	}
 	else
 	{
 		fill_container(c, data);
@@ -156,7 +169,7 @@ void	ft_printstr(t_data *data, int id)
 	{
 		if (!s)
 			s = "(null)";
-		if (!(data->container) && id)
+		if ((!(data->container) && id))
 			data->container = ft_strdup(s);
 		else
 			fill_container(s, data);
