@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/12 14:33:56 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:56:51 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ int		get_container(const char *src, t_data *data, int i)
 	i = -1;
 	while (++i < 6)
 		data->i = (params[i])(src + data->i, data) ? ++data->i : data->i;
-	function[(int)data->type](data, data->type);
-	ft_putstr(data->container);
+	if (!function[(int)data->type](data, data->type))
+		return (data->i);
+	i = -1;
+	while (++i < (int)ft_strlen(data->container) || i < data->size)
+		ft_putchar(data->container[i]);
 	return (data->i);
 }
 

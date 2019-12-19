@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 12:55:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:17:52 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@
 typedef	struct	s_data
 {
 	char		hash;
+	int			c_width;
 	char		filler;
 	int			ret;
 	int			i;
 	int			param;
 	char		*container;
 	va_list		arg;
-	int			flag;
+	int			size;
 	char		width;
 	int			precision;
 	int			length;

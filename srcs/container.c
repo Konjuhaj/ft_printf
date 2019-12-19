@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   container.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 12:55:23 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:52:21 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void	fill_container(char *c, t_data *data)
 	remove = 0;
 	if (data->hash == '#')
 		c = handle_hash(c, data, &start);
+	if (data->type == 'd' || data->type == 'o' || data->type == 'x' ||
+		data->type == 'X' || data->type == 'u' || data->type == 'u')
+		data->precision = data->precision < (int)ft_strlen(c) ?
+		(int)ft_strlen(c) : data->precision;
 	if (data->precision > (int)ft_strlen(c) && ft_strlen(c) != 0)
 	{
 		c = handle_prsecision(c, data);
@@ -82,7 +86,7 @@ void	fill_container(char *c, t_data *data)
 	srclen = data->precision < 0 ? ft_strlen(c) : data->precision;
 	srclen = ft_strlen(c) == 0 ? 0 : srclen;
 	start = 0;
-	if (data->flag > 0)
+	if (data->size > 0)
 	{
 		start += destlen - srclen > 0 ? destlen - srclen : 0;
 		ft_strncpy(data->container + start, c, destlen - start);

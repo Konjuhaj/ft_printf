@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
+#    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/18 13:38:50 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/18 14:33:22 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ $(NAME): $(OBJECTS) $(LIB_OBJECTS) $(HEADERS)
 		@ar rc $(NAME) $(OBJECTS) $(LIB_OBJECTS)
 		@ranlib $(NAME)
 		@echo "$(NAME)	[$(COLOR_SUCCESS)OK$(COLOR_RESET)]"
-		@echo "		[$(COLOR_SUCCESS)FINISHED$(COLOR_RESET)]"
+		@echo "	[$(COLOR_SUCCESS)FINISHED$(COLOR_RESET)]"
 
 $(OBJECTS_PATH)%.o: $(SRC_PATH)%.c
 		@mkdir $(OBJECTS_PATH) 2>/dev/null || echo "" > /dev/null

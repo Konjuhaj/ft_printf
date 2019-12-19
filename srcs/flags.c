@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 13:24:33 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:36:12 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		is_flag(const char *c, t_data *data)
 	int i;
 
 	i = 0;
-	data->flag = 0;
+	data->size = 0;
 	data->filler = ' ';
 	while (c[i] == ' ' || c[i] == '#' || c[i] == '0')
 	{
@@ -39,13 +39,15 @@ int		is_flag(const char *c, t_data *data)
 	}
 	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))
 	{
-		data->flag = ft_atoi(c + i);
+		data->size = ft_atoi(c + i);
 		while((c[i] == '-' || c[i] == '+') && c[i + 1] == '0')
 			i++;
-		data->container = get_buffer(data->flag, data);
-		data->i += data->flag < 0 ? ncount(data->flag) + i - 1: ncount(data->flag) + i - 1;
+		data->container = get_buffer(data->size, data);
+		data->c_width = data->size < 0 ? data->size * -1 : data->size;
+		data->i += data->size < 0 ? ncount(data->size) + i - 1: ncount(data->size) + i - 1;
 		return (1);
 	}
+	data->c_width = 0;
 	data->i += i;
 	return (0);
 }
@@ -67,7 +69,9 @@ int		is_precision(const char *s, t_data *data)
 	{
 		data->precision = ft_atoi(s + 1);
 		data->i += ncount(data->precision);
-		if ((data->precision > data->flag && data->flag > 0) || (data->precision > data->flag * -1 && data->flag < 0))
+		if ((data->precision > data->size && data->size > 0) ||
+			(data->precision > data->size * -1 && data->size < 0) ||
+			(data->precision > 0 && s[-1] == '%'))
 		{
 			data->filler = '0';
 			data->container = get_buffer(data->precision, data);
