@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 15:56:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:31:08 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,16 @@ int		is_type(const char *s, t_data *data)
 {
 	if (*s == 'd' || *s == 'i' || *s == 'u'
 		|| *s == 'f' || *s == 'x' || *s == 'X'
-		|| *s == 'o' || *s == 's' || *s == 'c'
+		|| *s == 'o')
+	{
+		data->id = NUMBER;
+		data->type = *s;
+		return (1);
+	}
+	else if (*s == 's' || *s == 'c'
 		|| *s == 'p' || *s == '%')
 	{
+		data->id = TEXT;
 		data->type = *s;
 		return (1);
 	}
@@ -69,8 +76,7 @@ int		get_container(const char *src, t_data *data, int i)
 	i = -1;
 	while (++i < 6)
 		data->i = (params[i])(src + data->i, data) ? ++data->i : data->i;
-	if (!function[(int)data->type](data, data->type))
-		return (data->i);
+	function[(int)data->type](data, data->type);
 	i = -1;
 	while (++i < (int)ft_strlen(data->container) || i < data->size)
 		ft_putchar(data->container[i]);

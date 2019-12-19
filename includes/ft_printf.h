@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 15:17:52 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:46:30 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define HEXAL 16
 # define DECIMAL 10
 # define BINARY 2
+# define NUMBER 1
+# define TEXT 2
 # include <stdarg.h>
 # include <unistd.h>
 # include "../libft/libft.h"
@@ -23,6 +25,7 @@
 typedef	struct	s_data
 {
 	char		hash;
+	int			id;
 	int			c_width;
 	char		filler;
 	int			ret;
@@ -34,6 +37,7 @@ typedef	struct	s_data
 	char		width;
 	int			precision;
 	int			length;
+	char		sign;
 	char		type;
 }				t_data;
 

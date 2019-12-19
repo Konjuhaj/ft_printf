@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 15:36:12 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:49:19 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		is_flag(const char *c, t_data *data)
 			data->hash = c[i] == '#' ? '#' : 0;
 		if (data->filler != '0')
 			data->filler = c[i] == '0' ? '0' : data->filler;
+		if (data->sign != ' ')
+			data->sign = c[i] == ' ' ? ' ' : data->sign;
 		i++;
 	}
 	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))

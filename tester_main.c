@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 15:48:44 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:52:54 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(void)
 	str3 = "THREE";
 	str4 = "FOUR";
 
-  ft_printf("%5.2x", 5427);
+	printf("%#.0o", 0);
 //   printf("\n");
 // 	system("\n\nLEAKS a.out\n\n");
 	return (0);

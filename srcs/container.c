@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/18 15:52:21 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:39:13 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ void	fill_container(char *c, t_data *data)
 	remove = 0;
 	if (data->hash == '#')
 		c = handle_hash(c, data, &start);
-	if (data->type == 'd' || data->type == 'o' || data->type == 'x' ||
-		data->type == 'X' || data->type == 'u' || data->type == 'u')
+	if (data->id == NUMBER)
 		data->precision = data->precision < (int)ft_strlen(c) ?
 		(int)ft_strlen(c) : data->precision;
-	if (data->precision > (int)ft_strlen(c) && ft_strlen(c) != 0)
+	else if (data->id == TEXT)
+		data->precision = data->precision < (int)ft_strlen(c) ?
+		data->precision : (int)ft_strlen(c);
+	if (data->precision > (int)ft_strlen(c) && ft_strlen(c) != 0
+		&& data->id == NUMBER)
 	{
 		c = handle_prsecision(c, data);
 		remove = 1;
