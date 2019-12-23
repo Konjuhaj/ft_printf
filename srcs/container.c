@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   container.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/20 14:21:13 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/23 13:53:45 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ char	*handle_prsecision(char *c, t_data *data)
 char*	handle_sign(char *s)
 {
 	int i;
+	char *temp;
 
 	i = 0;
-	while (s[i] != '-' && s[i] != '+')
+	while (s[i] != '-')
 		i++;
-	s[0] = s[i];
 	s[i] = '0';
-	return (s);
+	temp = ft_strjoin("-", s);
+	return (temp);
 }
 
 void	fill_container(char *c, t_data *data)
@@ -94,7 +95,7 @@ void	fill_container(char *c, t_data *data)
 		ft_strncpy(BUFFER + start, c, destlen - start);
 	}
 	if(c[0] == '-' && BUFFER[0] == '0')
-		c = handle_sign(BUFFER);
+		data->container.buffer = handle_sign(BUFFER);
 	else
 		ft_strncpy(BUFFER + start, c, srclen);
 	if (remove == 1)

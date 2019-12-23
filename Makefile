@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
+#    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/20 11:58:00 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/23 12:34:35 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIB_SRCS_PATH = ./libft/
 LIB_SRC_FILES = ft_putchar.c ft_putendl.c ft_strncpy.c ft_isalnum.c ft_atoi.c ft_putstr.c \
 				ft_isdigit.c ft_isalpha.c ft_printbit.c ft_strlen.c ft_isdigit.c \
 				ft_putnbr_base.c ft_itoa_base.c ft_memset.c ft_capitalize.c ncount.c ft_strdel.c\
-				ft_bzero.c ft_strdup.c ft_uitoa_base.c ft_strjoin.c ft_strcpy.c
+				ft_bzero.c ft_strdup.c ft_uitoa_base.c ft_strjoin.c ft_strcpy.c ft_strsub.c
 LIB_SRC = $(addprefix $(LIB_SRCS_PATH), $(LIB_SRC_FILES))
 
 LIB_OBJECTS_PATH =./objs/

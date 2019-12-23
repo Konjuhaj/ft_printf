@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/20 16:07:08 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/23 14:16:13 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,13 @@ int		get_container(const char *src, t_data *data, int i)
 		return (data->i);
 	function[(int)data->type](data, data->type);
 	i = -1;
-	while (++i < (int)ft_strlen(BUFFER))
+	if ((data->sign == ' ' || data->sign == '+')
+		&& data->container.id == NUMBER && BUFFER[0] != '-')
+	{
+		ft_putchar(data->sign);
+		data->ret++;
+	}
+	while (++i < (int)ft_strlen(BUFFER) || i < data->size)
 		ft_putchar(BUFFER[i]);
 	return (data->i);
 }
