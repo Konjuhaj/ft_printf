@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/19 18:49:19 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/20 15:49:31 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,33 @@ int		is_parameter(const char *s, t_data *data)
 	return(0);
 }
 
-int		is_flag(const char *c, t_data *data)
+int		is_flag(const char *s, t_data *data)
 {
 	int i;
 
 	i = 0;
 	data->size = 0;
-	data->filler = ' ';
-	while (c[i] == ' ' || c[i] == '#' || c[i] == '0')
+	data->container.filler = ' ';
+	while (s[i] == ' ' || s[i] == '#' || s[i] == '0')
 	{
 		if (data->hash != '#')
-			data->hash = c[i] == '#' ? '#' : 0;
-		if (data->filler != '0')
-			data->filler = c[i] == '0' ? '0' : data->filler;
+			data->hash = s[i] == '#' ? '#' : 0;
+		if (data->container.filler != '0')
+			data->container.filler = s[i] == '0' ? '0' : data->container.filler;
 		if (data->sign != ' ')
-			data->sign = c[i] == ' ' ? ' ' : data->sign;
+			data->sign = s[i] == ' ' ? ' ' : data->sign;
 		i++;
 	}
-	if (c[i] == '+' || c[i] == '-' || ft_isdigit(c[i]))
+	if (s[i] == '+' || s[i] == '-' || ft_isdigit(s[i]))
 	{
-		data->size = ft_atoi(c + i);
-		while((c[i] == '-' || c[i] == '+') && c[i + 1] == '0')
+		data->size = ft_atoi(s + i);
+		while((s[i] == '-' || s[i] == '+') && s[i + 1] == '0')
 			i++;
-		data->container = get_buffer(data->size, data);
-		data->c_width = data->size < 0 ? data->size * -1 : data->size;
+		data->container.size = data->size < 0 ? data->size * -1 : data->size;
 		data->i += data->size < 0 ? ncount(data->size) + i - 1: ncount(data->size) + i - 1;
 		return (1);
 	}
-	data->c_width = 0;
+	data->container.size = 0;
 	data->i += i;
 	return (0);
 }
@@ -71,12 +70,10 @@ int		is_precision(const char *s, t_data *data)
 	{
 		data->precision = ft_atoi(s + 1);
 		data->i += ncount(data->precision);
-		if ((data->precision > data->size && data->size > 0) ||
-			(data->precision > data->size * -1 && data->size < 0) ||
+		if ((data->precision > data->container.size) ||
 			(data->precision > 0 && s[-1] == '%'))
 		{
-			data->filler = '0';
-			data->container = get_buffer(data->precision, data);
+			data->container.filler = '0';
 		}
 		return (1);
 	}

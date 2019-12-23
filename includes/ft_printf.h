@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/19 18:46:30 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/20 12:16:49 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,29 @@
 # define BINARY 2
 # define NUMBER 1
 # define TEXT 2
+#define BUFFER data->container.buffer
 # include <stdarg.h>
 # include <unistd.h>
 # include "../libft/libft.h"
 
+typedef struct s_container
+{
+	int			size;
+	char		*buffer;
+	int			id;
+	char		filler;
+	char		prefix;
+}				t_container;
+
+
 typedef	struct	s_data
 {
 	char		hash;
-	int			id;
 	int			c_width;
-	char		filler;
 	int			ret;
 	int			i;
 	int			param;
-	char		*container;
+	t_container container;
 	va_list		arg;
 	int			size;
 	char		width;
@@ -65,11 +74,13 @@ void			ft_printstr(t_data *data, int id);
 
 void			ft_printcent(t_data *data, int id);
 
-char			*get_buffer(int n, t_data *data);
-
 void			fill_container(char *c, t_data *data);
 
 char			*handle_prsecision(char *c, t_data *data);
+
+char*			handle_sign(char *s);
+
+int				get_buffer(const char *s, t_data *data);
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/19 18:44:49 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/20 15:26:46 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	ft_printhex(t_data *data, int id)
 	ft_u_typecast(data, &bignum);
 	if (id)
 		temp = ft_uitoa_base(bignum, HEXAL);
-	if (!(data->container) || data->c_width < (int)ft_strlen(temp))
+	if (!(BUFFER) || data->c_width < (int)ft_strlen(temp))
 	{
 		if (bignum != 0)
-			data->container = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
+			BUFFER = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
 		else
-			data->container = temp;
-		if(data->precision > (int)ft_strlen(data->container) && ft_strlen(data->container) != 0)
-			data->container = handle_prsecision(data->container, data);
+			BUFFER = temp;
+		if(data->precision > (int)ft_strlen(BUFFER) && ft_strlen(BUFFER) != 0)
+			BUFFER = handle_prsecision(BUFFER, data);
 	}
 	else
 	{
@@ -59,8 +59,8 @@ void	ft_printhex(t_data *data, int id)
 		free(temp);
 	}
 	if (data->type == 'X')
-		ft_capitalize(data->container);
-	data->ret += ft_strlen(data->container);
+		ft_capitalize(BUFFER);
+	data->ret += ft_strlen(BUFFER);
 }
 
 void	ft_printdec(t_data *data, int id)
@@ -76,18 +76,20 @@ void	ft_printdec(t_data *data, int id)
 		ft_typecast(data, &num, id);
 	temp = id != 'u' ? ft_itoa_base(num, DECIMAL) :
 						ft_uitoa_base(bignum, DECIMAL);
-	if (!(data->container) || data->c_width < (int)ft_strlen(temp))
+	if (!(BUFFER))
 	{
-		data->container = data->hash == '#' ? ft_strjoin("0", temp) : temp;
-		if(data->precision > (int)ft_strlen(data->container) && ft_strlen(data->container) != 0)
-			data->container = handle_prsecision(data->container, data);
+		BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
+		if(data->precision > (int)ft_strlen(BUFFER) && ft_strlen(BUFFER) != 0)
+			BUFFER = handle_prsecision(BUFFER, data);
+			if (temp[0] == '-' && BUFFER[0] == '0')
+				BUFFER = handle_sign(BUFFER);
 	}
 	else
 	{
 		fill_container(temp, data);
 		free(temp);
 	}
-	data->ret += ft_strlen(data->container);
+	data->ret += ft_strlen(BUFFER);
 }
 
 void	ft_printoct(t_data *data, int id)
@@ -99,19 +101,19 @@ void	ft_printoct(t_data *data, int id)
 	if (id)
 		ft_u_typecast(data, &bignum);
 	temp = ft_uitoa_base(bignum, OCTAL);
-	if (!(data->container) || data->c_width < (int)ft_strlen(temp))
+	if (!(BUFFER) || data->c_width < (int)ft_strlen(temp))
 	{
-		data->container = data->hash == '#' ? ft_strjoin("0o", temp) : temp;
-		if (data->precision > (int)ft_strlen(data->container)
-			&& ft_strlen(data->container) != 0)
-			data->container = handle_prsecision(data->container, data);
+		BUFFER = data->hash == '#' ? ft_strjoin("0o", temp) : temp;
+		if (data->precision > (int)ft_strlen(BUFFER)
+			&& ft_strlen(BUFFER) != 0)
+			BUFFER = handle_prsecision(BUFFER, data);
 	}
 	else
 	{
 		fill_container(temp, data);
 		free(temp);
 	}
-	data->ret += ft_strlen(data->container);
+	data->ret += ft_strlen(BUFFER);
 }
 
 // void	ft_printbit_str(t_data *data, int id)
@@ -126,14 +128,14 @@ void	ft_printoct(t_data *data, int id)
 
 void	ft_printcent(t_data *data, int id)
 {
-	if (!(data->container) && id)
+	if (!(BUFFER) && id)
 	{
-		data->container = (char *)malloc(sizeof(char) * 2);
-		data->container[0] = '%';
+		BUFFER = (char *)malloc(sizeof(char) * 2);
+		BUFFER[0] = '%';
 	}
 	else
 		fill_container("%", data);
-	data->ret += ft_strlen(data->container);
+	data->ret += ft_strlen(BUFFER);
 }
 
 void	ft_printchar(t_data *data, int id)
@@ -144,26 +146,26 @@ void	ft_printchar(t_data *data, int id)
 	if (id)
 		c[0] = va_arg(data->arg, int);
 	c[2] = '\0';
-	if ((!(data->container) && id) || data->c_width == 0)
+	if ((!(BUFFER) && id) || data->c_width == 0)
 	{
 		if (!(*c))
 		{
 			ft_putchar(*c);
 			data->ret++;
 		}
-		data->container = c;
+		BUFFER = c;
 	}
 	else
 	{
 		if (!(*c))
 		{
-			data->container[data->size < 0 ? 0 : data->size - 1] = '\0';
+			BUFFER[data->size < 0 ? 0 : data->size - 1] = '\0';
 			data->ret++;
 		}
 		fill_container(c, data);
 		free(c);
 	}
-	data->ret += ft_strlen(data->container);
+	data->ret += ft_strlen(BUFFER);
 }
 
 void	ft_printstr(t_data *data, int id)
@@ -175,11 +177,11 @@ void	ft_printstr(t_data *data, int id)
 	{
 		if (!s)
 			s = "(null)";
-		if ((!(data->container) && id) || (s[0] == '\0' && data->size == 0)
+		if ((!(BUFFER) && id) || (s[0] == '\0' && data->size == 0)
 		|| (data->precision > (int)ft_strlen(s) && (int)ft_strlen(s) != 0))
-			data->container = ft_strdup(s);
+			BUFFER = ft_strdup(s);
 		else
 			fill_container(s, data);
-		data->ret += ft_strlen(data->container);
+		data->ret += ft_strlen(BUFFER);
 	}
 }

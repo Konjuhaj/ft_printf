@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
+#    By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/18 14:33:22 by bkonjuha         ###   ########.fr        #
+#    Updated: 2019/12/20 11:58:00 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC_PATH = ./srcs/
-SRCS_FILES = ft_printf.c flags.c ft_printer.c container.c
+SRCS_FILES = ft_printf.c flags.c ft_printer.c container.c buffer.c
 SRC = $(addprefix $(SRC_PATH), $(SRCS_FILES))
 
 OBJECTS_PATH = ./objs/

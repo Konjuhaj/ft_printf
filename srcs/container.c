@@ -3,36 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   container.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/19 18:39:13 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:21:13 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-char	*get_buffer(int n, t_data *data)
-{
-	char *buffer;
-
-	if (n < 0)
-		n *= -1;
-	if (data->container)
-		free(data->container);
-	buffer = (char *)malloc(sizeof(char) * n + 1);
-	ft_memset(buffer, data->filler, n);
-	return (buffer);
-}
 
 char	*handle_hash(char *s, t_data *data, size_t *start)
 {
 	char *temp;
 
 	temp = "0x";
-	if (data->container[0] == '0' && data->type != 'o')
+	if (BUFFER[0] == '0' && data->type != 'o')
 	{
-		data->container[1] = data->type;
+		BUFFER[1] = data->type;
 		*start = 2;
 	}
 	else if (data->type == 'o')
@@ -63,6 +50,18 @@ char	*handle_prsecision(char *c, t_data *data)
 	return (temp);
 }
 
+char*	handle_sign(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '-' && s[i] != '+')
+		i++;
+	s[0] = s[i];
+	s[i] = '0';
+	return (s);
+}
+
 void	fill_container(char *c, t_data *data)
 {
 	size_t	start;
@@ -73,29 +72,31 @@ void	fill_container(char *c, t_data *data)
 	remove = 0;
 	if (data->hash == '#')
 		c = handle_hash(c, data, &start);
-	if (data->id == NUMBER)
+	if (data->container.id == NUMBER)
 		data->precision = data->precision < (int)ft_strlen(c) ?
 		(int)ft_strlen(c) : data->precision;
-	else if (data->id == TEXT)
+	else if (data->container.id == TEXT)
 		data->precision = data->precision < (int)ft_strlen(c) ?
 		data->precision : (int)ft_strlen(c);
 	if (data->precision > (int)ft_strlen(c) && ft_strlen(c) != 0
-		&& data->id == NUMBER)
+		&& data->container.id == NUMBER)
 	{
 		c = handle_prsecision(c, data);
 		remove = 1;
 	}
-	destlen = ft_strlen(data->container);
+	destlen = ft_strlen(BUFFER);
 	srclen = data->precision < 0 ? ft_strlen(c) : data->precision;
 	srclen = ft_strlen(c) == 0 ? 0 : srclen;
 	start = 0;
 	if (data->size > 0)
 	{
 		start += destlen - srclen > 0 ? destlen - srclen : 0;
-		ft_strncpy(data->container + start, c, destlen - start);
+		ft_strncpy(BUFFER + start, c, destlen - start);
 	}
+	if(c[0] == '-' && BUFFER[0] == '0')
+		c = handle_sign(BUFFER);
 	else
-		ft_strncpy(data->container + start, c, srclen);
+		ft_strncpy(BUFFER + start, c, srclen);
 	if (remove == 1)
 		free(c);
 
