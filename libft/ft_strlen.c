@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 08:28:49 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/10/24 13:02:39 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/27 08:16:18 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str)
 		i++;
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/23 14:19:28 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2019/12/27 08:39:51 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ void	ft_printhex(t_data *data, int id)
 	unsigned long	bignum;
 
 	ft_u_typecast(data, &bignum);
-	if (id)
-		temp = ft_uitoa_base(bignum, HEXAL);
-	if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))
+	temp = ft_uitoa_base(bignum, HEXAL);
+	if (temp[0] == '0' && data->precision == 0 && id)
+	{
+		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
+		return ;
+	}
+	else if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))
 	{
 		if (bignum != 0)
 			BUFFER = data->hash == '#' ? ft_strjoin("0x", temp) : temp;
@@ -76,6 +80,11 @@ void	ft_printdec(t_data *data, int id)
 		ft_typecast(data, &num, id);
 	temp = id != 'u' ? ft_itoa_base(num, DECIMAL) :
 						ft_uitoa_base(bignum, DECIMAL);
+	if (temp[0] == '0' && data->precision == 0 && id)
+	{
+		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
+		return ;
+	}
 	if (!(BUFFER) || (data->container.size < (int)ft_strlen(temp)))
 	{
 		BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
@@ -101,6 +110,13 @@ void	ft_printoct(t_data *data, int id)
 	if (id)
 		ft_u_typecast(data, &bignum);
 	temp = ft_uitoa_base(bignum, OCTAL);
+	if (temp[0] == '0' && data->precision == 0 && id)
+	{
+		if (BUFFER == NULL && data->hash == '#')
+			BUFFER = ft_strdup("0");
+		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
+		return ;
+	}
 	if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))
 	{
 		BUFFER = data->hash == '#' ? ft_strjoin("0o", temp) : temp;

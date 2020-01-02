@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester_main.c                                      :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/27 08:50:42 by bkonjuha         ###   ########.fr       */
+/*   Created: 2019/12/29 00:12:55 by bkonjuha          #+#    #+#             */
+/*   Updated: 2019/12/29 00:15:41 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
+#include <unistd.h>
 
 int main(void)
 {
-	int c;
-	void *p;
-
-	c = 58;
-	p = &c;
-	printf("%040.50p", p);
-
-	// system("\n\nLEAKS a.out\n\n");
+	write(0, "#!/bin/sh\n", 10);
+	write(0, "cat author", 10);
 	return (0);
 }
