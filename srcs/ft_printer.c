@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/27 08:39:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:44:00 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ void	ft_u_typecast(t_data *data, unsigned long *bignum)
 		*bignum = (unsigned int)*bignum;
 }
 
+void	ft_fill(char *temp, t_data *data)
+{
+	fill_container(temp, data);
+	free(temp);
+	BUFFER = handle_sign(data, temp);
+	update_buffer(data);
+}
+
 void	ft_printhex(t_data *data, int id)
 {
 	char			*temp;
@@ -58,10 +66,7 @@ void	ft_printhex(t_data *data, int id)
 			BUFFER = handle_prsecision(BUFFER, data);
 	}
 	else
-	{
-		fill_container(temp, data);
-		free(temp);
-	}
+		ft_fill(temp, data);
 	if (data->type == 'X')
 		ft_capitalize(BUFFER);
 	data->ret += ft_strlen(BUFFER);
@@ -90,14 +95,10 @@ void	ft_printdec(t_data *data, int id)
 		BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
 		if (data->precision > (int)ft_strlen(BUFFER) && ft_strlen(BUFFER) != 0)
 			BUFFER = handle_prsecision(BUFFER, data);
-		if (temp[0] == '-' && BUFFER[0] == '0')
-			BUFFER = handle_sign(BUFFER);
+		BUFFER = handle_sign(data, temp);
 	}
 	else
-	{
-		fill_container(temp, data);
-		free(temp);
-	}
+		ft_fill(temp, data);
 	data->ret += ft_strlen(BUFFER);
 }
 
@@ -125,10 +126,7 @@ void	ft_printoct(t_data *data, int id)
 			BUFFER = handle_prsecision(BUFFER, data);
 	}
 	else
-	{
-		fill_container(temp, data);
-		free(temp);
-	}
+		ft_fill(temp, data);
 	data->ret += ft_strlen(BUFFER);
 }
 
@@ -178,8 +176,8 @@ void	ft_printchar(t_data *data, int id)
 			BUFFER[data->size < 0 ? 0 : data->size - 1] = '\0';
 			data->ret++;
 		}
-		fill_container(c, data);
-		free(c);
+		else
+			ft_fill(c, data);
 	}
 	data->ret += ft_strlen(BUFFER);
 }

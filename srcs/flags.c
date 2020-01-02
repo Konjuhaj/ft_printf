@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/23 14:21:15 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/02 16:55:26 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ int		is_flag(const char *s, t_data *data)
 			data->hash = s[i] == '#' ? '#' : 0;
 		if (data->container.filler != '0')
 			data->container.filler = s[i] == '0' ? '0' : data->container.filler;
-		if (data->sign != '+' && data->sign != '-')
+		if (data->sign != '+')
 			data->sign = s[i] == ' ' ? ' ' : data->sign;
-		if (data->sign != '-')
-			data->sign = s[i] == '+' ? '+' : data->sign;
-		data->sign = s[i] == '-' ? '-' : data->sign;
+		data->sign = s[i] == '+' ? '+' : data->sign;
+		data->allign = s[i] == '-' ? '-' : data->allign;
 		i++;
 	}
 	if (ft_isdigit(s[i]))
@@ -47,7 +46,7 @@ int		is_flag(const char *s, t_data *data)
 		data->size = ft_atoi(s + i);
 		data->container.size = data->size;
 		data->i += ncount(data->size) + i - 1;
-		data->size = data->sign == '-' ? data->size * -1 : data->size;
+		data->size = data->allign == '-' ? data->size * -1 : data->size;
 		data->container.filler = data->size < 0 ? ' ' : data->container.filler;
 		return (1);
 	}

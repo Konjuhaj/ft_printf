@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester_main.c                                      :+:      :+:    :+:   */
+/*   ft_printer2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/06 19:21:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 17:55:21 by bkonjuha         ###   ########.fr       */
+/*   Created: 2020/01/02 17:37:05 by bkonjuha          #+#    #+#             */
+/*   Updated: 2020/01/02 17:53:43 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
+#include "../includes/ft_printf.h"
 
-int main(void)
+void	ft_printaddr(t_data *data, int id)
 {
-	ft_printf("%-+10.5d", 4242);
+	unsigned long	num;
+	char			*temp;
 
-	// system("\n\nLEAKS a.out\n\n");
-	return (0);
+	num = va_arg(data->arg, unsigned long);
+	temp = ft_strjoin("0x", ft_uitoa_base(num, HEXAL));
+	if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))
+	{
+		BUFFER = temp;
+	}
+	else if (id)
+		ft_fill(temp, data);
 }

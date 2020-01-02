@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/23 12:19:38 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/02 18:04:34 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define BINARY 2
 # define NUMBER 1
 # define TEXT 2
-#	define BUFFER data->container.buffer
+# define BUFFER data->container.buffer
 # include <stdarg.h>
 # include <unistd.h>
 # include "../libft/libft.h"
@@ -48,6 +48,7 @@ typedef	struct	s_data
 	int			length;
 	char		sign;
 	char		type;
+	int			allign;
 }				t_data;
 
 int				ft_printf(const char *format, ...);
@@ -78,9 +79,17 @@ void			fill_container(char *c, t_data *data);
 
 char			*handle_prsecision(char *c, t_data *data);
 
-char			*handle_sign(char *s);
+char			*handle_sign(t_data *data, char *temp);
 
 int				get_buffer(const char *s, t_data *data);
+
+void			update_buffer(t_data *data);
+
+void			ft_fill(char *temp, t_data *data);
+
+void			ft_printaddr(t_data *data, int id);
+
+char			*handle_sign(t_data *data, char *temp);
 
 
 #endif

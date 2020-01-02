@@ -6,14 +6,14 @@
 #    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2019/12/23 12:34:35 by bkonjuha         ###   ########.fr        #
+#    Updated: 2020/01/02 17:51:46 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC_PATH = ./srcs/
-SRCS_FILES = ft_printf.c flags.c ft_printer.c container.c buffer.c
+SRCS_FILES = ft_printf.c flags.c ft_printer.c container.c buffer.c ft_printer2.c
 SRC = $(addprefix $(SRC_PATH), $(SRCS_FILES))
 
 OBJECTS_PATH = ./objs/

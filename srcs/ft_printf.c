@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/27 08:45:36 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:36:06 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	function_array(void (*f[])(), int (*f2[])())
 	f['x'] = &ft_printhex;
 	f['X'] = &ft_printhex;
 	f['o'] = &ft_printoct;
-	// f['p'] = &ft_printnum;
+	f['p'] = &ft_printaddr;
 	f['i'] = &ft_printdec;
 	f['d'] = &ft_printdec;
 	f['u'] = &ft_printdec;
@@ -82,13 +82,6 @@ int		get_container(const char *src, t_data *data, int i)
 		return (data->i);
 	function[(int)data->type](data, data->type);
 	i = -1;
-	if ((data->sign == ' ' || data->sign == '+')
-		&& data->container.id == NUMBER && BUFFER[0] != '-'
-		&& BUFFER[0] != ' ' && data->type != 'u')
-	{
-		ft_putchar(data->sign);
-		data->ret++;
-	}
 	if (BUFFER == NULL)
 		return (data->i);
 	while (++i < (int)ft_strlen(BUFFER) || i < data->size)
