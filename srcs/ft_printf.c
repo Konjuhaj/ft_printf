@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 17:36:06 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 10:29:29 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,20 @@ int		get_container(const char *src, t_data *data, int i)
 {
 	void	(*function[126])(t_data *data, int id);
 	int		(*params[7])(const char *s, t_data *data);
+	int		remember;
 
 	function_array(function, params);
 	data->i = i + 1;
+	remember = i + 1;
 	i = -1;
 	while (++i < 7)
 		data->i = (params[i])(src + data->i, data) ? ++data->i : data->i;
-	if (data->container.id == 0 && src[data->i])
-		return (data->i);
+	if (data->container.id == 0)
+		return (ft_default(data, remember));
 	function[(int)data->type](data, data->type);
-	i = -1;
 	if (BUFFER == NULL)
 		return (data->i);
+	i = -1;
 	while (++i < (int)ft_strlen(BUFFER) || i < data->size)
 		ft_putchar(BUFFER[i]);
 	return (data->i);

@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 17:44:00 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:40:22 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_typecast(t_data *data, long long *num, int id)
 		*num = (char)*num;
 	else if (data->length == 'l')
 		*num = (long)*num;
-	if (id == 'd' && data->length == 0)
+	if ((id == 'd' || id == 'i') && data->length == 0)
 		*num = (int)*num;
 }
 
@@ -95,7 +95,8 @@ void	ft_printdec(t_data *data, int id)
 		BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
 		if (data->precision > (int)ft_strlen(BUFFER) && ft_strlen(BUFFER) != 0)
 			BUFFER = handle_prsecision(BUFFER, data);
-		BUFFER = handle_sign(data, temp);
+		if (data->sign != 0 || (temp[0] == '-' && BUFFER[0] == '0'))
+			BUFFER = handle_sign(data, temp);
 	}
 	else
 		ft_fill(temp, data);
@@ -184,16 +185,21 @@ void	ft_printchar(t_data *data, int id)
 
 void	ft_printstr(t_data *data, int id)
 {
-	char *s;
+	char	*s;
+	int		slen;
+	int		size;
 
 	s = va_arg(data->arg, char *);
 	if (id)
 	{
+		size = data->container.size;
 		if (!s)
 			s = "(null)";
-		if ((!(BUFFER) && id) || (s[0] == '\0' && data->size == 0)
-		|| (data->precision > (int)ft_strlen(s) && (int)ft_strlen(s) != 0)
-		|| (data->container.size < (int)ft_strlen(s)))
+		slen = ft_strlen(s);
+		slen = data->precision > slen ? ft_strlen(s) : data->precision;
+		slen = slen == -1 ? ft_strlen(s) : slen;
+		if ((!(BUFFER) && id) || size < slen
+		|| ((data->precision > slen && slen != 0) && size < slen))
 			BUFFER = data->precision > -1 ?
 			ft_strsub(s, 0, data->precision) : ft_strdup(s);
 		else

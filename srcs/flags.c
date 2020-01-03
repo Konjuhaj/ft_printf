@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 16:55:26 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:24:37 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		is_flag(const char *s, t_data *data)
 
 	i = 0;
 	data->size = 0;
+	data->sign = 0;
 	data->container.filler = ' ';
 	while (s[i] == ' ' || s[i] == '#' || s[i] == '0' || s[i] == '+'|| s[i] == '-')
 	{
@@ -67,11 +68,15 @@ int		is_width(const char *s, t_data *data)
 
 int		is_precision(const char *s, t_data *data)
 {
+	int i;
+
+	i = 0;
 	data->precision = -1;
 	if (*s == '.' || *s == '*')
 	{
+		while (ft_isdigit(s[++i]))
+			data->i++;
 		data->precision = ft_atoi(s + 1);
-		data->i += ft_isdigit(s[1]) ? ncount(data->precision) : 0;
 		if ((data->precision > data->container.size) ||
 			(data->precision > 0 && s[-1] == '%'))
 		{

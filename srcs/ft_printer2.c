@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:37:05 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 17:53:43 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 10:12:00 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ void	ft_printaddr(t_data *data, int id)
 	}
 	else if (id)
 		ft_fill(temp, data);
+}
+
+int		ft_default(t_data *data, int i)
+{
+	ft_putchar('%');
+	data->ret++;
+	return (i);
 }

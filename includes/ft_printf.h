@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/02 18:04:34 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 10:11:17 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void			ft_fill(char *temp, t_data *data);
 void			ft_printaddr(t_data *data, int id);
 
 char			*handle_sign(t_data *data, char *temp);
+
+int				ft_default(t_data *datas, int i);
 
 
 #endif
