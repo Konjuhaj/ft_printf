@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/03 15:24:37 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:54:24 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int		is_parameter(const char *s, t_data *data)
 {
-	if(ft_isalnum(*s) && s[1] == '$')
+	if (ft_isalnum(*s) && s[1] == '$')
 	{
 		data->param = ft_atoi(s);
 		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 int		is_flag(const char *s, t_data *data)
@@ -29,6 +29,7 @@ int		is_flag(const char *s, t_data *data)
 	i = 0;
 	data->size = 0;
 	data->sign = 0;
+	data->allign = 0;
 	data->container.filler = ' ';
 	while (s[i] == ' ' || s[i] == '#' || s[i] == '0' || s[i] == '+'|| s[i] == '-')
 	{
@@ -42,15 +43,6 @@ int		is_flag(const char *s, t_data *data)
 		data->allign = s[i] == '-' ? '-' : data->allign;
 		i++;
 	}
-	if (ft_isdigit(s[i]))
-	{
-		data->size = ft_atoi(s + i);
-		data->container.size = data->size;
-		data->i += ncount(data->size) + i - 1;
-		data->size = data->allign == '-' ? data->size * -1 : data->size;
-		data->container.filler = data->size < 0 ? ' ' : data->container.filler;
-		return (1);
-	}
 	data->container.size = 0;
 	data->i += i;
 	return (0);
@@ -58,9 +50,13 @@ int		is_flag(const char *s, t_data *data)
 
 int		is_width(const char *s, t_data *data)
 {
-	if (*s == '*')
+	if (*s == '*' || ft_isdigit(*s))
 	{
-		data->width = *s;
+		data->size = ft_atoi(s);
+		data->container.size = data->size;
+		data->i += ncount(data->size) - 1;
+		data->size = data->allign == '-' ? data->size * -1 : data->size;
+		data->container.filler = data->size < 0 ? ' ' : data->container.filler;
 		return (1);
 	}
 	return (0);

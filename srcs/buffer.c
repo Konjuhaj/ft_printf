@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/03 15:54:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/04 10:04:27 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,57 @@ void	update_buffer(t_data *data)
 			BUFFER[size] = ' ';
 }
 
-char*	handle_sign(t_data *data, char *temp)
+void	handle_minus(t_data *data)
+{
+	int i;
+	int slen;
+
+	slen = ft_strlen(BUFFER);
+	i = 0;
+		{
+		while (BUFFER[i] != '-')
+			i++;
+		BUFFER[i] = '0';
+		if (BUFFER[0] == ' ')
+		{
+			while (BUFFER[i] == '0')
+				i--;
+			BUFFER[i] = '-';
+		}
+		else if ((BUFFER[0] != '0' && data->precision >= 0)
+		|| slen > data->precision
+		|| data->precision == -1)
+			BUFFER[0] = '-';
+		else if (BUFFER[0] == '0')
+			BUFFER = ft_strjoin("-", BUFFER);
+	}
+}
+
+char	*handle_sign(t_data *data, char *temp)
 {
 	int		i;
 	char	sign[2];
+	int		space;
+	int		len;
 
+	len = ft_strlen(temp);
+	space = data->container.size;
 	i = 0;
 	sign[1] = '\0';
 	sign[0] = temp[0] == '-' ? '-' : 0;
+	BUFFER = BUFFER == NULL ? ft_strnew(1) : BUFFER;
 	if (data->sign > 0 && *sign != '-')
 		sign[0] = data->sign;
 	if (sign[0] && sign[0] != '-' && data->container.id == NUMBER && data->type != 'u')
 	{
-		if (BUFFER[0] != ' ' && (data->container.size <= data->precision
-			|| data->container.size == 0))
+		if (BUFFER[0] != ' ' && (space <= data->precision
+			|| space == 0 || space <= len))
 		{
 			ft_putchar(data->sign);
 			data->ret++;
 		}
-		else if (data->container.size > data->precision && BUFFER[0] != ' '
-				&& data->precision >= 0)
+		else if (BUFFER[0] != ' ' && ((space > data->precision
+				&& data->precision >= 0) || sign[0] == ' '))
 		 	{
 				 i = ft_strlen(BUFFER) - 1;
 				while(--i >= 0)
@@ -82,21 +113,6 @@ char*	handle_sign(t_data *data, char *temp)
 		}
 	}
 	else if (temp[0] == '-' && data->container.filler == '0')
-	{
-		while (BUFFER[i] != '-')
-			i++;
-		BUFFER[i] = '0';
-		if (BUFFER[0] == ' ')
-		{
-			while (BUFFER[i] == '0')
-				i--;
-			BUFFER[i] = '-';
-		}
-		else if (data->container.size > data->precision)
-			BUFFER[0] = '-';
-		else if (BUFFER[0] == '0')
-			BUFFER = ft_strjoin("-", BUFFER);
-
-	}
+		handle_minus(data);
 	return (BUFFER);
 }

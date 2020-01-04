@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/03 10:29:29 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:37:24 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int		is_type(const char *s, t_data *data)
 
 void	function_array(void (*f[])(), int (*f2[])())
 {
-
 	f['c'] = &ft_printchar;
 	f['s'] = &ft_printstr;
 	f['x'] = &ft_printhex;

@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/03 10:11:17 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:49:43 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ char			*handle_sign(t_data *data, char *temp);
 
 int				ft_default(t_data *datas, int i);
 
+void			ft_typecast(t_data *data, long long *num, int id);
+
+void			ft_u_typecast(t_data *data, unsigned long *bignum);
 
 #endif
