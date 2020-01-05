@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 19:23:05 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/05 09:31:32 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ void			ft_typecast(t_data *data, long long *num, int id);
 void			ft_u_typecast(t_data *data, unsigned long *bignum);
 
 void			ft_printfloat(t_data *data, int id);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 19:17:41 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/05 09:27:21 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/05 10:13:43 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ char	*ft_f_itoa(double num, int prec)
 		count *= 10;
 	n = num * count;
 	count = ncount_base(prec == 0 ? n / 10 : n, DECIMAL) + 1;
+	count = n == 0 ? prec + 2 : count;
+	if (num == 0.0 && prec == 0)
+		count = 1;
 	i = prec == 0 ? -1 : count - prec;
 	if (!(temp = ft_strnew(count + 1)))
 		return (NULL);
