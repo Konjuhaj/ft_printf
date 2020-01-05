@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/03 17:37:24 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/04 19:29:25 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	function_array(void (*f[])(), int (*f2[])())
 	f['d'] = &ft_printdec;
 	f['u'] = &ft_printdec;
 	f['%'] = &ft_printcent;
+	f['f'] = &ft_printfloat;
 	f2[0] = &is_parameter;
 	f2[1] = &is_flag;
 	f2[2] = &is_width;
