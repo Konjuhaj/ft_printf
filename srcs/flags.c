@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 17:56:58 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:15:25 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		is_flag(const char *s, t_data *data)
 	i = 0;
 	data->size = 0;
 	data->sign = 0;
+	data->hash = 0;
 	data->allign = 0;
 	data->container.filler = ' ';
 	while (s[i] == ' ' || s[i] == '#' || s[i] == '0'

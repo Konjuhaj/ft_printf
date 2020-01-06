@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 18:24:51 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/06 19:32:39 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,18 @@ int		get_buffer(const char *s, t_data *data)
 	return (0);
 }
 
-void	update_buffer(t_data *data)
+void	update_buffer(t_data *data, char *temp)
 {
 	int size;
+	int prec;
 
-	size = data->container.size - data->precision;
-	while (--size && data->container.id == NUMBER && data->type == 'd'
-			&& data->precision != -1
-			&& BUFFER[size - 1] == '0')
+	if (data->allign == '-')
+		return ;
+	prec = data->precision > (int)ft_strlen(temp) ?
+			data->precision : (int)ft_strlen(temp);
+	size = data->container.size - prec;
+	while (--size > -1 && data->container.id == NUMBER
+			&& data->precision != -1 && BUFFER[size] == '0')
 		BUFFER[size] = ' ';
 }
 

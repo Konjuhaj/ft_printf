@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 19:10:50 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:27:24 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ void	ft_printoct(t_data *data, int id)
 	bignum = 0;
 	ft_u_typecast(data, &bignum);
 	temp = ft_uitoa_base(bignum, OCTAL);
-	if (temp[0] == '0' && data->precision == 0 && id)
+	if (temp[0] == '0' && data->precision <= 0 && id)
 	{
-		if (BUFFER == NULL && data->hash == '#')
+		if (BUFFER == NULL && (data->precision != 0 || data->hash == '#'))
 			BUFFER = ft_strdup("0");
+		else
+			ft_fill(ft_uitoa_base(0, OCTAL), data);
 		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
 		return ;
 	}

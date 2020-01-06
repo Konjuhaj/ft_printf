@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/05 09:31:32 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/06 19:23:55 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char			*handle_sign(t_data *data, char *temp);
 
 int				get_buffer(const char *s, t_data *data);
 
-void			update_buffer(t_data *data);
+void			update_buffer(t_data *data, char *temp);
 
 void			ft_fill(char *temp, t_data *data);
 
