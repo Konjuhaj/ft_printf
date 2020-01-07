@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 19:17:41 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/05 10:13:43 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:55:11 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,26 @@ char	*ft_f_itoa(double num, int prec)
 {
 	int			count;
 	int			i;
-	long long	n;
+	int			n;
 	char		*temp;
 
-	count = 1;
+	count = ncount(num);
+	i = count + 1;
 	prec = prec == -1 ? 6 : prec;
-	i = prec;
-	while (i != 0 && i--)
-		count *= 10;
-	n = num * count;
-	count = ncount_base(prec == 0 ? n / 10 : n, DECIMAL) + 1;
-	count = n == 0 ? prec + 2 : count;
-	if (num == 0.0 && prec == 0)
-		count = 1;
-	i = prec == 0 ? -1 : count - prec;
-	if (!(temp = ft_strnew(count + 1)))
-		return (NULL);
-	temp[count] = '\0';
-	if (num < 0)
+	temp = ft_strnew(prec + 1 + count);
+	temp = ft_memcpy(temp, ft_itoa(ft_abs(num) >= 1.0 ? num : 0), count);
+	temp[count] = prec == 0 ? 0 : '.';
+	num = num < 0 ? num * -1.0 : num;
+	n = num;
+	num -= (double)n;
+	while (i < prec + count + 1)
 	{
-		temp[0] = '-';
-		n *= -1;
+		temp[i++] = num * 10 + '0';
+		num = num * 10;
+		n = num;
+		num -= (double)n;
 	}
-	while (--count > -1 && temp[count] != '-')
-	{
-		if (count == i - 1 && prec != 0)
-			temp[count--] = '.';
-		temp[count] = n % 10 + '0';
-		n /= 10;
-	}
+
 	return (temp);
 }
 

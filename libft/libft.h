@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 08:13:08 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/05 07:58:53 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:24:15 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ char				*ft_uitoa_base(unsigned long long nb, int base);
 
 int					ncount_base(long long n, int base);
 
+int					ft_abs(int num);
 
 #endif
