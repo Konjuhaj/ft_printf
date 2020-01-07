@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/07 10:04:19 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:57:44 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	update_buffer(t_data *data, char *temp)
 		BUFFER[size] = ' ';
 }
 
-void	handle_minus(t_data *data)
+void	handle_minus(t_data *data, char sign)
 {
 	int i;
 	int slen;
+	int space;
 
+	space = data->container.size;
 	slen = ft_strlen(BUFFER);
 	i = 0;
 	while (BUFFER[i] != '-')
@@ -65,10 +67,13 @@ void	handle_minus(t_data *data)
 	BUFFER[i] = '0';
 	if (BUFFER[0] == ' ')
 	{
-		while (BUFFER[i] == '0')
-			i--;
-		BUFFER[i] = '-';
+		i = 0;
+		while (!ft_isalnum(BUFFER[i]))
+			i++;
+		BUFFER[i - 1] = '-';
 	}
+	else if (data->allign == '-' && data->precision < space)
+		move_right(data, sign);
 	else if ((BUFFER[0] != '0' && data->precision >= 0)
 			|| slen > data->precision
 			|| data->precision == -1)
@@ -91,12 +96,7 @@ void	handle_plus(t_data *data, char sign, int len)
 		data->ret++;
 	}
 	else if (data->allign == '-')
-	{
-		i = ft_strlen(BUFFER) - 1;
-		while (BUFFER[0] != ' ' && --i >= 0)
-			BUFFER[i + 1] = BUFFER[i];
-		BUFFER[0] = sign;
-	}
+		move_right(data, sign);
 	else
 	{
 		while (BUFFER[i] == ' ')
@@ -119,6 +119,6 @@ char	*handle_sign(t_data *data, char *temp)
 		&& data->type != 'u')
 		handle_plus(data, sign, len);
 	else if (temp[0] == '-' && data->container.filler == '0')
-		handle_minus(data);
+		handle_minus(data, sign);
 	return (BUFFER);
 }

@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 17:35:00 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/06 19:24:19 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:05:40 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,19 @@ void	ft_fill(char *temp, t_data *data)
 {
 	fill_container(temp, data);
 	free(temp);
-	BUFFER = handle_sign(data, temp);
 	if (data->precision < data->container.size)
 		update_buffer(data, temp);
+	if (data->precision >= (int)ft_strlen(temp)
+		|| BUFFER[0] == '0' || data->sign)
+		BUFFER = handle_sign(data, temp);
+}
+
+void	move_right(t_data *data, char sign)
+{
+	int i;
+
+	i = ft_strlen(BUFFER) - 1;
+	while (--i >= 0)
+		BUFFER[i + 1] = BUFFER[i];
+	BUFFER[0] = sign;
 }
