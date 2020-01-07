@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/06 19:32:39 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:04:19 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,10 @@ void	handle_plus(t_data *data, char sign, int len)
 		ft_putchar(data->sign);
 		data->ret++;
 	}
-	else if (BUFFER[0] != ' ' && ((space > data->precision
-			&& data->precision >= 0) || sign == ' '))
+	else if (data->allign == '-')
 	{
 		i = ft_strlen(BUFFER) - 1;
-		while (--i >= 0)
+		while (BUFFER[0] != ' ' && --i >= 0)
 			BUFFER[i + 1] = BUFFER[i];
 		BUFFER[0] = sign;
 	}

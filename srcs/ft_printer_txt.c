@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:37:05 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 17:42:01 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/07 09:18:39 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ void	ft_printchar(t_data *data, int id)
 void	ft_printcent(t_data *data, int id)
 {
 	if (!(BUFFER) && id)
-	{
-		BUFFER = (char *)malloc(sizeof(char) * 2);
-		BUFFER[0] = '%';
-	}
+		BUFFER = ft_strdup("%");
 	else
 		fill_container("%", data);
 	data->ret += ft_strlen(BUFFER);
