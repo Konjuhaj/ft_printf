@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/07 13:03:11 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/08 19:56:12 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,12 @@ void			ft_printfloat(t_data *data, int id);
 
 void			move_right(t_data *data, char sign);
 
+double			round_up(double num, int prec);
+
+long double		l_round_up(long double num, int prec);
+
+char			*ft_f_itoa(double num, int prec);
+
+char			*ft_lf_itoa(long double num, int prec);
 
 #endif

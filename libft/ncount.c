@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ncount.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 14:20:14 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/12/11 14:20:42 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:51:03 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ncount(int n)
+int		ncount(long long n)
 {
 	int		i;
 	long	nb;

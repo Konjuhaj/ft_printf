@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/06 20:15:25 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:55:06 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,15 @@ int		is_precision(const char *s, t_data *data)
 
 int		is_legth(const char *s, t_data *data)
 {
-	if ((s[0] == 'h' && s[1] == 'h') ||
-			(s[0] == 'l' && s[1] == 'l'))
+	data->length = 0;
+	if ((s[0] == 'h' && s[1] == 'h')
+		|| (s[0] == 'l' && s[1] == 'l'))
 	{
 		data->length = s[0] + s[1];
 		data->i++;
 		return (1);
 	}
-	else if (s[0] == 'h' || s[0] == 'l')
+	else if (s[0] == 'L' || s[0] == 'h' || s[0] == 'l')
 	{
 		data->length = s[0];
 		return (1);
