@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 19:53:35 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/09 14:18:15 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/09 16:29:53 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ double	round_up(double num, int prec)
 		return (num);
 	while (n--)
 		i /= 10.0;
-	return (num = num < 0 ? num - i : num + i);
+	return (num = num < 0.0000000000 ? num - i : num + i);
 }
 
 char	*ft_f_itoa(double num, int prec)
 {
 	int			count;
-	int			mover;
+	long long	mover;
 	int			i;
 	char		*temp;
 
@@ -43,7 +43,7 @@ char	*ft_f_itoa(double num, int prec)
 	temp[count] = prec == 0 ? 0 : '.';
 	if (num < 0.0 && temp[0] != '-')
 		ft_putchar('-');
-	num = num < 0 ? num * -1.0 : num;
+	num = num < 0.0000000000 ? num * -1.0 : num;
 	while (i < prec + count + 1)
 	{
 		temp[i++] = (long long)(num * mover) % 10 + '0';
@@ -61,13 +61,13 @@ long double	l_round_up(long double num, int prec)
 	i = 5.0;
 	while (n--)
 		i /= 10.0;
-	return (num = num < 0 ? num - i : num + i);
+	return (num = num < 0.0000000000 ? num - i : num + i);
 }
 
 char	*ft_lf_itoa(long double num, int prec)
 {
 	int			count;
-	int			mover;
+	long long	mover;
 	int			i;
 	char		*temp;
 
@@ -81,7 +81,7 @@ char	*ft_lf_itoa(long double num, int prec)
 	temp[count] = prec == 0 ? 0 : '.';
 	if (num < 0.0 && temp[0] != '-')
 		ft_putchar('-');
-	num = num < 0 ? num * -1.0 : num;
+	num = num < 0.0000000000 ? num * -1. : num;
 	while (i < prec + count + 1)
 	{
 		temp[i++] = (long long)(num * mover) % 10 + '0';

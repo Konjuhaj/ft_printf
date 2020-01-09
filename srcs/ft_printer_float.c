@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 19:17:41 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/09 14:47:24 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/09 16:43:06 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ void		ft_printfloat(t_data *data, int id)
 		BUFFER = temp;
 	else
 		ft_fill(temp, data);
+	if (data->hash && data->precision == 0)
+	{
+		temp = ft_strjoin(BUFFER, ".");
+		free(BUFFER);
+		BUFFER = temp;
+	}
+	if (data->sign > 0 && ft_isalnum(BUFFER[0]))
+		ft_putchar(data->sign);
 }
