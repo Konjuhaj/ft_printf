@@ -6,17 +6,19 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/08 19:40:39 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:46:18 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int		get_buffer(const char *s, t_data *data)
+int		create_buffer(const char *s, t_data *data)
 {
 	int size;
 
 	size = data->container.size;
+	data->container.filler = data->container.id == TEXT ? ' '
+	: data->container.filler;
 	if (size > 0 && s)
 	{
 		if (data->precision > size && data->container.id == NUMBER)
@@ -24,7 +26,7 @@ int		get_buffer(const char *s, t_data *data)
 			size = data->precision;
 			data->container.filler = '0';
 		}
-		BUFFER = (char *)malloc(sizeof(char) * size + 1);
+		BUFFER = ft_strnew(size + 1);
 		ft_memset(BUFFER, data->container.filler, size);
 		if (data->precision < data->container.size
 			&& data->container.id == NUMBER && data->type == 'd'
@@ -53,72 +55,33 @@ void	update_buffer(t_data *data, char *temp)
 		BUFFER[size] = ' ';
 }
 
-void	handle_minus(t_data *data, char sign)
+void	fill_buffer(char *c, t_data *data)
 {
-	int i;
-	int slen;
-	int space;
+	size_t	start;
+	size_t	destlen;
+	size_t	srclen;
+	int		precision;
+	int		remove;
 
-	space = data->container.size;
-	slen = ft_strlen(BUFFER);
-	i = 0;
-	while (BUFFER[i] != '-')
-		i++;
-	BUFFER[i] = '0';
-	if (BUFFER[0] == ' ')
+	remove = 0;
+	start = 0;
+	precision = data->precision;
+	dot_validator(data, &c, &precision, &remove);
+	destlen = ft_strlen(BUFFER);
+	srclen = precision < 0 ? ft_strlen(c) : precision;
+	srclen = ft_strlen(c) == 0 ? 0 : srclen;
+	if (srclen > destlen && data->container.id == NUMBER)
 	{
-		i = 0;
-		while (!ft_isalnum(BUFFER[i]))
-			i++;
-		BUFFER[i - 1] = '-';
+		free(BUFFER);
+		BUFFER = ft_strdup(c);
 	}
-	else if (data->allign == '-' && data->precision < space)
-		move_right(data, sign);
-	else if ((BUFFER[0] != '0' && data->precision >= 0)
-			|| slen > data->precision
-			|| data->precision == -1)
-		BUFFER[0] = '-';
-	else if (BUFFER[0] == '0')
-		BUFFER = ft_strjoin("-", BUFFER);
-}
-
-void	handle_plus(t_data *data, char sign, int len)
-{
-	int		space;
-	int		i;
-
-	space = data->container.size;
-	i = 0;
-	if (BUFFER[0] != ' ' && (space <= data->precision
-			|| space == 0 || space <= len))
+	else if (data->allign != '-')
 	{
-		ft_putchar(data->sign);
-		data->ret++;
+		start += destlen - srclen > 0 ? destlen - srclen : 0;
+		ft_strncpy(BUFFER + start, c, destlen - start);
 	}
-	else if (data->allign == '-')
-		move_right(data, sign);
 	else
-	{
-		while (BUFFER[i] == ' ')
-			i++;
-		BUFFER[i == 0 ? 0 : i - 1] = data->sign;
-	}
-}
-
-char	*handle_sign(t_data *data, char *temp)
-{
-	char	sign;
-	int		len;
-
-	len = ft_strlen(temp);
-	sign = temp[0] == '-' ? '-' : 0;
-	BUFFER = BUFFER == NULL ? ft_strnew(1) : BUFFER;
-	if (data->sign > 0 && sign != '-')
-		sign = data->sign;
-	if (sign && sign != '-' && data->container.id == NUMBER
-		&& data->type != 'u')
-		handle_plus(data, sign, len);
-	else if (temp[0] == '-' && data->container.filler == '0')
-		handle_minus(data, sign);
-	return (BUFFER);
+		ft_memcpy(BUFFER + start, c, srclen);
+	if (remove == 1)
+		free(c);
 }

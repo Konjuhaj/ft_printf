@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/08 19:56:12 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:18:54 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,41 +62,41 @@ int				is_precision(const char *s, t_data *data);
 
 int				is_legth(const char *s, t_data *data);
 
-void			ft_printhex(t_data *data, int id);
+void			x_flag(t_data *data, int id);
 
-void			ft_printoct(t_data *data, int id);
+void			o_flag(t_data *data, int id);
 
-void			ft_printdec(t_data *data, int id);
+void			d_flag(t_data *data, int id);
 
-void			ft_printchar(t_data *data, int id);
+void			c_flag(t_data *data, int id);
 
-void			ft_printstr(t_data *data, int id);
+void			s_flag(t_data *data, int id);
 
-void			ft_printcent(t_data *data, int id);
+void			percent_flag(t_data *data, int id);
 
-void			fill_container(char *c, t_data *data);
+void			fill_buffer(char *c, t_data *data);
 
-char			*handle_prsecision(char *c, t_data *data);
+char			*dot_flag(char *c, t_data *data);
 
-char			*handle_sign(t_data *data, char *temp);
+char			*sign_flag(t_data *data, char *temp);
 
-int				get_buffer(const char *s, t_data *data);
+int				create_buffer(const char *s, t_data *data);
 
 void			update_buffer(t_data *data, char *temp);
 
 void			ft_fill(char *temp, t_data *data);
 
-void			ft_printaddr(t_data *data, int id);
+void			p_flag(t_data *data, int id);
 
-char			*handle_sign(t_data *data, char *temp);
+char			*sign_flag(t_data *data, char *temp);
 
 int				ft_default(t_data *datas, int i);
 
-void			ft_typecast(t_data *data, long long *num, int id);
+void			typecast(t_data *data, long long *num, int id);
 
-void			ft_u_typecast(t_data *data, unsigned long *bignum);
+void			u_typecast(t_data *data, unsigned long *bignum);
 
-void			ft_printfloat(t_data *data, int id);
+void			f_flag(t_data *data, int id);
 
 void			move_right(t_data *data, char sign);
 
@@ -107,5 +107,10 @@ long double		l_round_up(long double num, int prec);
 char			*ft_f_itoa(double num, int prec);
 
 char			*ft_lf_itoa(long double num, int prec);
+
+void			dot_validator(t_data *data, char **c, int *prec, int *rem);
+
+char			*hash_flag(char *s, t_data *data);
+
 
 #endif

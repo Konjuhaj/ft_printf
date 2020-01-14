@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/04 19:29:25 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:15:31 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,27 @@ int		is_type(const char *s, t_data *data)
 
 void	function_array(void (*f[])(), int (*f2[])())
 {
-	f['c'] = &ft_printchar;
-	f['s'] = &ft_printstr;
-	f['x'] = &ft_printhex;
-	f['X'] = &ft_printhex;
-	f['o'] = &ft_printoct;
-	f['p'] = &ft_printaddr;
-	f['i'] = &ft_printdec;
-	f['d'] = &ft_printdec;
-	f['u'] = &ft_printdec;
-	f['%'] = &ft_printcent;
-	f['f'] = &ft_printfloat;
+	f['c'] = &c_flag;
+	f['s'] = &s_flag;
+	f['x'] = &x_flag;
+	f['X'] = &x_flag;
+	f['o'] = &o_flag;
+	f['p'] = &p_flag;
+	f['i'] = &d_flag;
+	f['d'] = &d_flag;
+	f['u'] = &d_flag;
+	f['%'] = &percent_flag;
+	f['f'] = &f_flag;
 	f2[0] = &is_parameter;
 	f2[1] = &is_flag;
 	f2[2] = &is_width;
 	f2[3] = &is_precision;
 	f2[4] = &is_legth;
 	f2[5] = &is_type;
-	f2[6] = &get_buffer;
+	f2[6] = &create_buffer;
 }
 
-int		get_container(const char *src, t_data *data, int i)
+int		read_flags(const char *src, t_data *data, int i)
 {
 	void	(*function[126])(t_data *data, int id);
 	int		(*params[7])(const char *s, t_data *data);
@@ -105,7 +105,7 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i = get_container(format, &f, i);
+			i = read_flags(format, &f, i);
 			free(f.container.buffer);
 			f.container.buffer = NULL;
 			if (ft_strlen(format) <= (size_t)i)

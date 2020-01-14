@@ -6,15 +6,15 @@
 #    By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 12:17:08 by bkonjuha          #+#    #+#              #
-#    Updated: 2020/01/08 19:54:21 by bkonjuha         ###   ########.fr        #
+#    Updated: 2020/01/14 13:38:51 by bkonjuha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC_PATH = ./srcs/
-SRCS_FILES = ft_printf.c flags.c ft_printer_txt.c container.c buffer.c ft_printer_num.c \
-				ft_printer_helper.c ft_printer_float.c float_helper.c
+SRCS_FILES = ft_printf.c flag_reader.c buffer.c flag_handler.c float_helpers.c floats.c helper.c \
+				numbers.c text.c
 SRC = $(addprefix $(SRC_PATH), $(SRCS_FILES))
 
 OBJECTS_PATH = ./objs/
@@ -26,7 +26,7 @@ LIB_SRC_FILES = ft_putchar.c ft_putendl.c ft_strncpy.c ft_isalnum.c ft_atoi.c ft
 				ft_isdigit.c ft_isalpha.c ft_printbit.c ft_strlen.c ft_isdigit.c \
 				ft_putnbr_base.c ft_itoa_base.c ft_memset.c ft_capitalize.c ncount.c ft_strdel.c\
 				ft_bzero.c ft_strdup.c ft_uitoa_base.c ft_strjoin.c ft_strcpy.c ft_strsub.c \
-				ft_strnew.c ft_memcpy.c ncount_base.c ft_abs.c ft_itoa.c
+				ft_strnew.c ft_memcpy.c ncount_base.c ft_abs.c ft_itoa.c ft_memalloc.c
 LIB_SRC = $(addprefix $(LIB_SRCS_PATH), $(LIB_SRC_FILES))
 
 LIB_OBJECTS_PATH =./objs/
