@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 16:18:54 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/15 06:17:48 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ int				is_precision(const char *s, t_data *data);
 
 int				is_legth(const char *s, t_data *data);
 
-void			x_flag(t_data *data, int id);
+void			x_flag(t_data *data);
 
-void			o_flag(t_data *data, int id);
+void			o_flag(t_data *data);
 
-void			d_flag(t_data *data, int id);
+void			d_flag(t_data *data);
 
-void			c_flag(t_data *data, int id);
+void			c_flag(t_data *data);
 
-void			s_flag(t_data *data, int id);
+void			s_flag(t_data *data);
 
-void			percent_flag(t_data *data, int id);
+void			percent_flag(t_data *data);
 
 void			fill_buffer(char *c, t_data *data);
 
@@ -86,17 +86,17 @@ void			update_buffer(t_data *data, char *temp);
 
 void			ft_fill(char *temp, t_data *data);
 
-void			p_flag(t_data *data, int id);
+void			p_flag(t_data *data);
 
 char			*sign_flag(t_data *data, char *temp);
 
 int				ft_default(t_data *datas, int i);
 
-void			typecast(t_data *data, long long *num, int id);
+void			typecast(t_data *data, long long *num);
 
 void			u_typecast(t_data *data, unsigned long *bignum);
 
-void			f_flag(t_data *data, int id);
+void			f_flag(t_data *data);
 
 void			move_right(t_data *data, char sign);
 
