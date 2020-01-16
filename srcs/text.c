@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   text.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:37:05 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 16:31:35 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/15 06:17:44 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,50 +19,47 @@ int		ft_default(t_data *data, int i)
 	return (i);
 }
 
-void	s_flag(t_data *data, int id)
+void	s_flag(t_data *data)
 {
 	char	*s;
 	int		slen;
 	int		size;
 
 	s = va_arg(data->arg, char *);
-	if (id)
-	{
-		size = data->container.size;
+	size = data->container.size;
 		if (!s)
-			s = "(null)";
-		slen = ft_strlen(s);
-		slen = data->precision > slen ? ft_strlen(s) : data->precision;
-		slen = slen == -1 ? ft_strlen(s) : slen;
-		if ((!(BUFFER) && id) || size < slen
-		|| ((data->precision > slen && slen != 0) && size < slen))
-		{
-			if (BUFFER)
-				free(BUFFER);
-			BUFFER = data->precision > -1 ?
-			ft_strsub(s, 0, data->precision) : ft_strdup(s);
-		}
-		else
-			fill_buffer(s, data);
-		data->ret += ft_strlen(BUFFER);
+		s = "(null)";
+			slen = ft_strlen(s);
+	slen = data->precision > slen ? ft_strlen(s) : data->precision;
+	slen = slen == -1 ? ft_strlen(s) : slen;
+	if ((!(BUFFER)) || size < slen
+	|| ((data->precision > slen && slen != 0) && size < slen))
+	{
+		if (BUFFER)
+			free(BUFFER);
+		BUFFER = data->precision > -1 ?
+		ft_strsub(s, 0, data->precision) : ft_strdup(s);
 	}
+	else
+		fill_buffer(s, data);
+	data->ret += ft_strlen(BUFFER);
 }
 
-void	c_flag(t_data *data, int id)
+void	c_flag(t_data *data)
 {
 	char *c;
 
 	c = ft_strnew(2);
 	c[0] = va_arg(data->arg, int);
 	c[1] = '\0';
-	if ((!(BUFFER) && id) || data->container.size == 0)
+	if ((!(BUFFER)) || data->container.size == 0)
 	{
 		if (!(*c))
 		{
 			ft_putchar(*c);
 			data->ret++;
 		}
-		BUFFER = c;
+		BUFFER = ft_strdup(c);
 	}
 	else
 	{
@@ -74,13 +71,12 @@ void	c_flag(t_data *data, int id)
 		else
 			ft_fill(c, data);
 	}
-	free(c);
 	data->ret += ft_strlen(BUFFER);
 }
 
-void	percent_flag(t_data *data, int id)
+void	percent_flag(t_data *data)
 {
-	if (!(BUFFER) && id)
+	if (!(BUFFER))
 		BUFFER = ft_strdup("%");
 	else
 		fill_buffer("%", data);

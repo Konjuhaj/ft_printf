@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floats.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 19:17:41 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 13:40:08 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/15 06:19:47 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	Lf_flag(t_data *data)
 		ft_fill(temp, data);
 }
 
-void		f_flag(t_data *data, int id)
+void		f_flag(t_data *data)
 {
 	double	num;
 	char	*temp;
@@ -37,7 +37,7 @@ void		f_flag(t_data *data, int id)
 		Lf_flag(data);
 		return ;
 	}
-	else if (id)
+	else
 		num = va_arg(data->arg, double);
 	temp = ft_f_itoa(num, data->precision);
 	if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))

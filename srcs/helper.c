@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 17:35:00 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 17:01:27 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/15 06:28:10 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	typecast(t_data *data, long long *num, int id)
+void	typecast(t_data *data, long long *num)
 {
+	int id;
+
+	id = data->type;
 	*num = va_arg(data->arg, long long);
 	if (data->length == 'h')
 		*num = (short)*num;
@@ -38,10 +41,6 @@ void	u_typecast(t_data *data, unsigned long *bignum)
 
 void	ft_fill(char *temp, t_data *data)
 {
-	if (data->hash == '#')
-	{
-		temp = hash_flag(temp, data);
-	}
 	fill_buffer(temp, data);
 	free(temp);
 	if (data->precision < data->container.size)

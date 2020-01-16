@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 17:00:59 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:17:48 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ char	*hash_flag(char *s, t_data *data)
 	char *temp;
 
 	temp = NULL;
-	if (data->container.filler == '0')
+	if (s[0] == '0')
+		return (s);
+	else if (data->container.filler == '0')
 		BUFFER[1] = data->type;
-	else
-	{
-			temp = ft_strjoin("0x", s);
-			free(s);
-	}
+	else if (data->type == 'x' || data->type == 'X')
+		temp = ft_strjoin("0x", s);
+	else if (data->type == 'o')
+		temp = ft_strjoin("0", s);
 	return (temp == NULL ? s : temp);
 }
 
@@ -33,8 +34,6 @@ char	*dot_flag(char *c, t_data *data)
 	int		len;
 	int		padding;
 
-	if (BUFFER)
-		free(BUFFER);
 	len = ft_strlen(c);
 	padding = data->precision - len;
 	temp = ft_strnew(data->precision + 1);
@@ -46,6 +45,8 @@ char	*dot_flag(char *c, t_data *data)
 
 void	dot_validator(t_data *data, char **c, int *prec, int *rem)
 {
+	if (data->hash == '#')
+		*c = hash_flag(*c, data);
 	if (data->container.id == NUMBER)
 		*prec = data->precision < (int)ft_strlen(*c) ?
 		(int)ft_strlen(*c) : data->precision;
@@ -70,7 +71,7 @@ void	minus_flag(t_data *data, char sign)
 	space = data->container.size;
 	slen = ft_strlen(BUFFER);
 	i = 0;
-	while (BUFFER[i] != '-')
+	while (BUFFER[i] != '-' && BUFFER[i])
 		i++;
 	BUFFER[i] = '0';
 	if (BUFFER[0] == ' ')
