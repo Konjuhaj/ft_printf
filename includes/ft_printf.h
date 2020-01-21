@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/15 06:17:48 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:39:29 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,19 @@
 
 typedef struct	s_container
 {
-	int			size;
 	char		*buffer;
 	int			id;
 	char		filler;
-	char		prefix;
 }				t_container;
 
 typedef	struct	s_data
 {
 	char		hash;
-	int			c_width;
 	int			ret;
 	int			i;
-	int			param;
 	t_container container;
 	va_list		arg;
 	int			size;
-	char		width;
 	int			precision;
 	int			length;
 	char		sign;
@@ -52,7 +47,7 @@ typedef	struct	s_data
 
 int				ft_printf(const char *format, ...);
 
-int				is_parameter(const char *s, t_data *data);
+int				is_type(const char *s, t_data *data);
 
 int				is_flag(const char *c, t_data *data);
 
@@ -88,9 +83,7 @@ void			ft_fill(char *temp, t_data *data);
 
 void			p_flag(t_data *data);
 
-char			*sign_flag(t_data *data, char *temp);
-
-int				ft_default(t_data *datas, int i);
+int				ft_default(int i);
 
 void			typecast(t_data *data, long long *num);
 
@@ -108,9 +101,24 @@ char			*ft_f_itoa(double num, int prec);
 
 char			*ft_lf_itoa(long double num, int prec);
 
-void			dot_validator(t_data *data, char **c, int *prec, int *rem);
+int				dot_validator(t_data *data, char **c, int *prec);
 
 char			*hash_flag(char *s, t_data *data);
 
+void			add_buffer_postfix(t_data *data, char *postfix);
+
+void			add_buffer_prefix(char *prefix, t_data *data);
+
+void			number_hub(t_data *data, char *temp);
+
+void			capital_s_flag(t_data *data);
+
+void			b_flag(t_data *data);
+
+void			capital_b_flag(t_data *data);
+
+void			t_flag(t_data *data);
+
+void			capital_t_flag(t_data *data);
 
 #endif

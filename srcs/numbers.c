@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/04 20:19:11 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/15 09:43:15 by bkonjuha         ###   ########.fr       */
+/*   Created: 2020/01/21 11:50:40 by bkonjuha          #+#    #+#             */
+/*   Updated: 2020/01/21 11:55:00 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,7 @@ void	x_flag(t_data *data)
 
 	u_typecast(data, &bignum);
 	temp = ft_uitoa_base(bignum, HEXAL);
-	if (temp[0] == '0' && data->precision == 0)
-	{
-		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
-		return ;
-	}
-	if (!(BUFFER) || data->container.size <= (int)ft_strlen(temp))
-	{
-		if (bignum != 0)
-			BUFFER = data->hash == '#' ? ft_strjoin("0x", temp) : ft_strdup(temp);
-		else
-			BUFFER = ft_strdup(temp);
-		if (data->precision > (int)ft_strlen(BUFFER) && ft_strlen(BUFFER) != 0)
-			BUFFER = dot_flag(BUFFER, data);
-		free(temp);
-	}
-	else
-		ft_fill(temp, data);
-	if (data->type == 'X')
-		ft_capitalize(BUFFER);
-	data->ret += ft_strlen(BUFFER);
-}
-
-void	d_flag_helper(t_data *data, char *temp)
-{
-	if (BUFFER)
-		free(BUFFER);
-	BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
-	if (data->precision > (int)ft_strlen(BUFFER))
-	{
-		data->container.size = ft_strlen(temp);
-		create_buffer(temp, data);
-		ft_fill(temp, data);
-	}
-	else if (data->sign != 0 || (temp[0] == '-' && BUFFER[0] == '0'))
-		BUFFER = sign_flag(data, temp);
+	number_hub(data, temp);
 }
 
 void	d_flag(t_data *data)
@@ -69,18 +35,7 @@ void	d_flag(t_data *data)
 		typecast(data, &num);
 	temp = data->type != 'u' ? ft_itoa_base(num, DECIMAL) :
 						ft_uitoa_base(bignum, DECIMAL);
-	if (temp[0] == '0' && data->precision == 0)
-	{
-		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
-		if (data->sign == '+')
-			BUFFER = sign_flag(data, temp);
-		return ;
-	}
-	if (!(BUFFER) || (data->container.size < (int)ft_strlen(temp)))
-		d_flag_helper(data, temp);
-	else
-		ft_fill(temp, data);
-	data->ret += ft_strlen(BUFFER);
+	number_hub(data, temp);
 }
 
 void	o_flag(t_data *data)
@@ -91,27 +46,7 @@ void	o_flag(t_data *data)
 	bignum = 0;
 	u_typecast(data, &bignum);
 	temp = ft_uitoa_base(bignum, OCTAL);
-	if (temp[0] == '0' && data->precision <= 0)
-	{
-		if (BUFFER == NULL && (data->precision != 0 || data->hash == '#'))
-			BUFFER = ft_strdup("0");
-		else if (data->precision != 0)
-			ft_fill(temp, data);
-		data->ret += BUFFER == NULL ? 0 : ft_strlen(BUFFER);
-		return ;
-	}
-	if (!(BUFFER) || data->container.size <= (int)ft_strlen(temp))
-	{
-		if (BUFFER)
-			free(BUFFER);
-		BUFFER = data->hash == '#' ? ft_strjoin("0", temp) : temp;
-		if (data->precision > (int)ft_strlen(BUFFER)
-			&& ft_strlen(BUFFER) != 0)
-			BUFFER = dot_flag(BUFFER, data);
-	}
-	else
-		ft_fill(temp, data);
-	data->ret += ft_strlen(BUFFER);
+	number_hub(data, temp);
 }
 
 void	p_flag(t_data *data)
@@ -119,15 +54,25 @@ void	p_flag(t_data *data)
 	unsigned long	num;
 	char			*temp;
 	char			*temp2;
+	char			*temp3;
 
 	num = va_arg(data->arg, unsigned long);
 	temp2 = ft_uitoa_base(num, HEXAL);
-	temp = ft_strjoin("0x", temp2);
-	free(temp2);
-	if (!(BUFFER) || data->container.size < (int)ft_strlen(temp))
+	if (data->precision >= 0 && ft_strlen(temp2) < 2)
 	{
-		BUFFER = temp;
+		temp3 = ft_strnew((size_t)data->precision + 1);
+		ft_memset(temp3, '0', data->precision);
+		if (!(ft_strcmp(temp2, "0")))
+		{
+			free(temp2);
+			temp2 = temp3;
+		}
 	}
+	temp = ft_strjoin("0x", temp2);
+	if (!(BUFFER) || data->size < (int)ft_strlen(temp))
+		BUFFER = temp;
 	else
 		ft_fill(temp, data);
+	data->ret += ft_strlen(BUFFER);
+	free(temp2);
 }

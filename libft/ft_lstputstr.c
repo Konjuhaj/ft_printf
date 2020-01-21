@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 16:20:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2019/10/31 08:54:02 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:34:38 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	ft_lstputstr(t_list *lst)
 	while (lst)
 	{
 		ft_putstr((char *)lst->content);
-		write(1, "->", 2);
+		if (lst->next != NULL)
+			write(1, "->", 2);
 		lst = lst->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/15 09:17:48 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:32:31 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,13 @@ char	*dot_flag(char *c, t_data *data)
 	return (temp);
 }
 
-void	dot_validator(t_data *data, char **c, int *prec, int *rem)
-{
-	if (data->hash == '#')
-		*c = hash_flag(*c, data);
-	if (data->container.id == NUMBER)
-		*prec = data->precision < (int)ft_strlen(*c) ?
-		(int)ft_strlen(*c) : data->precision;
-	else if (data->container.id == TEXT)
-		*prec = data->precision < (int)ft_strlen(*c) ?
-		data->precision : (int)ft_strlen(*c);
-	if (data->precision > (int)ft_strlen(*c) && ft_strlen(*c) != 0
-		&& data->container.id == NUMBER)
-	{
-		*c = dot_flag(*c, data);
-		*rem = 1;
-	}
-}
-
-
 void	minus_flag(t_data *data, char sign)
 {
 	int i;
 	int slen;
 	int space;
 
-	space = data->container.size;
+	space = data->size;
 	slen = ft_strlen(BUFFER);
 	i = 0;
 	while (BUFFER[i] != '-' && BUFFER[i])
@@ -88,7 +69,7 @@ void	minus_flag(t_data *data, char sign)
 			|| data->precision == -1)
 		BUFFER[0] = '-';
 	else if (BUFFER[0] == '0')
-		BUFFER = ft_strjoin("-", BUFFER);
+		add_buffer_prefix("-", data);
 }
 
 void	plus_flag(t_data *data, char sign, int len)
@@ -96,7 +77,7 @@ void	plus_flag(t_data *data, char sign, int len)
 	int		space;
 	int		i;
 
-	space = data->container.size;
+	space = data->size;
 	i = 0;
 	if (BUFFER[0] != ' ' && (space <= data->precision
 			|| space == 0 || space <= len))
@@ -118,8 +99,10 @@ char	*sign_flag(t_data *data, char *temp)
 {
 	char	sign;
 	int		len;
+	int		size;
 
 	len = ft_strlen(temp);
+	size = data->precision;
 	sign = temp[0] == '-' ? '-' : 0;
 	BUFFER = BUFFER == NULL ? ft_strnew(1) : BUFFER;
 	if (data->sign > 0 && sign != '-')
@@ -127,8 +110,8 @@ char	*sign_flag(t_data *data, char *temp)
 	if (sign && sign != '-' && data->container.id == NUMBER
 		&& data->type != 'u')
 		plus_flag(data, sign, len);
-	else if (temp[0] == '-' && data->container.filler == '0')
+	else if (temp[0] == '-' && data->container.filler == '0'
+			&& (size >= len || size == -1))
 		minus_flag(data, sign);
 	return (BUFFER);
 }
-

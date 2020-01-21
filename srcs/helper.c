@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 17:35:00 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/15 06:28:10 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:16:00 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	u_typecast(t_data *data, unsigned long *bignum)
 void	ft_fill(char *temp, t_data *data)
 {
 	fill_buffer(temp, data);
-	free(temp);
-	if (data->precision < data->container.size)
+	if (data->precision < data->size)
 		update_buffer(data, temp);
 	if (data->precision >= (int)ft_strlen(temp)
 		|| BUFFER[0] == '0' || data->sign)
 		BUFFER = sign_flag(data, temp);
+	free(temp);
 }
 
 void	move_right(t_data *data, char sign)
@@ -58,4 +58,23 @@ void	move_right(t_data *data, char sign)
 	while (--i >= 0)
 		BUFFER[i + 1] = BUFFER[i];
 	BUFFER[0] = sign;
+}
+
+int		dot_validator(t_data *data, char **c, int *prec)
+{
+	int len;
+
+	if (data->hash == '#')
+		*c = hash_flag(*c, data);
+	len = (int)ft_strlen(*c);
+	if (data->container.id == NUMBER)
+		*prec = data->precision < len ?
+		len : data->precision;
+	else if (data->container.id == TEXT)
+		*prec = data->precision < len ?
+		data->precision : len;
+	if (data->precision > len
+		&& data->container.id == NUMBER)
+		*c = dot_flag(*c, data);
+	return (0);
 }

@@ -6,45 +6,11 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/14 13:15:31 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:31:54 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-void	parameter(int num, va_list args)
-{
-	va_list args2;
-
-	va_copy(args2, args);
-	while (--num)
-	{
-		va_arg(args2, char*);
-	}
-	ft_putstr(va_arg(args2, char*));
-	va_end(args2);
-}
-
-int		is_type(const char *s, t_data *data)
-{
-	if (*s == 'd' || *s == 'i' || *s == 'u'
-		|| *s == 'f' || *s == 'x' || *s == 'X'
-		|| *s == 'o')
-	{
-		data->container.id = NUMBER;
-		data->type = *s;
-		return (1);
-	}
-	else if (*s == 's' || *s == 'c'
-		|| *s == 'p' || *s == '%')
-	{
-		data->container.id = TEXT;
-		data->type = *s;
-		return (1);
-	}
-	data->container.id = 0;
-	return (0);
-}
 
 void	function_array(void (*f[])(), int (*f2[])())
 {
@@ -59,13 +25,18 @@ void	function_array(void (*f[])(), int (*f2[])())
 	f['u'] = &d_flag;
 	f['%'] = &percent_flag;
 	f['f'] = &f_flag;
-	f2[0] = &is_parameter;
-	f2[1] = &is_flag;
-	f2[2] = &is_width;
-	f2[3] = &is_precision;
-	f2[4] = &is_legth;
-	f2[5] = &is_type;
-	f2[6] = &create_buffer;
+	f['S'] = &capital_s_flag;
+	f['b'] = &b_flag;
+	f['B'] = &capital_b_flag;
+	f['t'] = &t_flag;
+	f['T'] = &capital_t_flag;
+	f2[0] = &is_flag;
+	f2[1] = &is_width;
+	f2[2] = &is_precision;
+	f2[3] = &is_legth;
+	f2[4] = &is_type;
+	f2[5] = &create_buffer;
+	f2[6] = NULL;
 }
 
 int		read_flags(const char *src, t_data *data, int i)
@@ -78,10 +49,10 @@ int		read_flags(const char *src, t_data *data, int i)
 	data->i = i + 1;
 	remember = i + 1;
 	i = -1;
-	while (++i < 7)
+	while (params[++i] != NULL)
 		data->i = (params[i])(src + data->i, data) ? ++data->i : data->i;
 	if (data->container.id == 0)
-		return (ft_default(data, remember));
+		return (ft_default(remember));
 	function[(int)data->type](data, data->type);
 	if (BUFFER == NULL)
 		return (data->i);
@@ -91,6 +62,19 @@ int		read_flags(const char *src, t_data *data, int i)
 	return (data->i);
 }
 
+void	empty_struct(t_data *f)
+{
+	f->size = 0;
+	f->sign = 0;
+	f->hash = 0;
+	f->allign = 0;
+	f->precision = -1;
+	f->container.id = 0;
+	f->length = 0;
+	f->container.buffer = NULL;
+	f->length = 0;
+}
+
 int		ft_printf(const char *format, ...)
 {
 	t_data	f;
@@ -98,13 +82,12 @@ int		ft_printf(const char *format, ...)
 
 	i = 0;
 	f.ret = 0;
-	f.container.buffer = NULL;
-	f.length = 0;
 	va_start(f.arg, format);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
+			empty_struct(&f);
 			i = read_flags(format, &f, i);
 			free(f.container.buffer);
 			f.container.buffer = NULL;
