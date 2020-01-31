@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:21 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 18:39:29 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:37:37 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void			add_buffer_prefix(char *prefix, t_data *data);
 
 void			number_hub(t_data *data, char *temp);
 
-void			capital_s_flag(t_data *data);
-
 void			b_flag(t_data *data);
 
 void			capital_b_flag(t_data *data);
@@ -120,5 +118,7 @@ void			capital_b_flag(t_data *data);
 void			t_flag(t_data *data);
 
 void			capital_t_flag(t_data *data);
+
+void			capital_s_flag(t_data *data);
 
 #endif

@@ -6,16 +6,22 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:27:25 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 18:31:54 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:38:44 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
+/*
+** Add printing functons to f[]
+** Add reading functions to f2[]
+*/
+
 void	function_array(void (*f[])(), int (*f2[])())
 {
 	f['c'] = &c_flag;
 	f['s'] = &s_flag;
+	f['S'] = &capital_s_flag;
 	f['x'] = &x_flag;
 	f['X'] = &x_flag;
 	f['o'] = &o_flag;
@@ -25,7 +31,6 @@ void	function_array(void (*f[])(), int (*f2[])())
 	f['u'] = &d_flag;
 	f['%'] = &percent_flag;
 	f['f'] = &f_flag;
-	f['S'] = &capital_s_flag;
 	f['b'] = &b_flag;
 	f['B'] = &capital_b_flag;
 	f['t'] = &t_flag;
@@ -38,6 +43,14 @@ void	function_array(void (*f[])(), int (*f2[])())
 	f2[5] = &create_buffer;
 	f2[6] = NULL;
 }
+
+/*
+** run through all reader functions
+** if data type is not recognized we go to default
+** while there is str left we print
+** or while there is size left we print
+** if buffer is NULL we have 0 precision, 0 number and 0 width
+*/
 
 int		read_flags(const char *src, t_data *data, int i)
 {
@@ -74,6 +87,12 @@ void	empty_struct(t_data *f)
 	f->container.buffer = NULL;
 	f->length = 0;
 }
+
+/*
+** if i exceeds the length of format we are
+** at the end of format and out of bounds
+** we continue to check if there is another % right after
+*/
 
 int		ft_printf(const char *format, ...)
 {

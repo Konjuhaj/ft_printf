@@ -6,54 +6,78 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 11:41:30 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/19 17:44:35 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 17:00:54 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** Numbers get leading zeros with prec so we update buffer
+**	size to prec if prec is larger that size
+** else if number is is smaller than size we update part
+**	of the buffer to zero for the input
+*/
 
 int		create_buffer(const char *s, t_data *data)
 {
 	int size;
 
 	size = data->size;
-	data->container.filler = data->container.id == TEXT ? ' '
-	: data->container.filler;
 	if (size > 0 && s)
 	{
 		if (data->precision > size && data->container.id == NUMBER)
 		{
 			size = data->precision;
 			data->container.filler = '0';
+			data->size = size;
 		}
 		BUFFER = ft_strnew(size + 1);
 		ft_memset(BUFFER, data->container.filler, size);
 		if (data->precision < data->size
-			&& data->container.id == NUMBER && data->type == 'd'
-			&& data->precision != -1 && data->container.filler == '0')
+			&& data->container.id == NUMBER
+			&& data->precision != -1 && data->container.filler == '0'
+			&& data->type != 'f')
 		{
+			data->container.filler = ' ';
 			size = size - data->precision;
 			while (--size >= 0)
-				BUFFER[size] = ' ';
+				BUFFER[size] = data->container.filler;
 		}
 	}
 	return (0);
 }
 
+/*
+** function is called to move '-' to the start of Buffer
+*/
+
 void	update_buffer(t_data *data, char *temp)
 {
-	int size;
-	int prec;
+	int len;
 
+	len = ft_strlen(temp);
 	if (data->allign == '-')
 		return ;
-	prec = data->precision > (int)ft_strlen(temp) ?
-			data->precision : (int)ft_strlen(temp);
-	size = data->size - prec;
-	while (--size > -1 && data->container.id == NUMBER
-			&& data->precision != -1 && BUFFER[size] == '0')
-		BUFFER[size] = ' ';
+	if (len == data->precision && temp[0] == '-'
+		&& data->container.id == NUMBER)
+	{
+		while (len >= 0 && --len)
+		{
+			if (BUFFER[len] == '-')
+			{
+				BUFFER[len] = '0';
+				BUFFER[--len] = '-';
+			}
+		}
+	}
 }
+
+/*
+** update temp (add prefix and leading zeros)
+**	in casee of left alligned and prec >= temp lem
+** free c if unsused
+*/
 
 void	fill_buffer(char *temp, t_data *data)
 {
@@ -67,10 +91,10 @@ void	fill_buffer(char *temp, t_data *data)
 	dot_validator(data, &c, &precision);
 	destlen = ft_strlen(BUFFER);
 	srclen = precision < 0 ? ft_strlen(c) : precision;
-	if (srclen > destlen && data->container.id == NUMBER)
+	if (srclen >= destlen && data->container.id == NUMBER)
 	{
 		free(BUFFER);
-		BUFFER = c;
+		BUFFER = ft_strdup(c);
 	}
 	else if (data->allign != '-')
 	{

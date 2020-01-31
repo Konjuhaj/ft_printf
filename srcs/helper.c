@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 17:35:00 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 17:16:00 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:59:04 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,26 @@ void	u_typecast(t_data *data, unsigned long *bignum)
 		*bignum = (unsigned int)*bignum;
 }
 
+/*
+** Centrelized filler
+** precision behaves differently with 'f' type
+*/
+
 void	ft_fill(char *temp, t_data *data)
 {
 	fill_buffer(temp, data);
-	if (data->precision < data->size)
+	if (data->precision >= (int)ft_strlen(temp) && data->type != 'f')
 		update_buffer(data, temp);
 	if (data->precision >= (int)ft_strlen(temp)
 		|| BUFFER[0] == '0' || data->sign)
 		BUFFER = sign_flag(data, temp);
 	free(temp);
 }
+
+/*
+** Move the str in buffer to the right
+** to make space for a sign.
+*/
 
 void	move_right(t_data *data, char sign)
 {
@@ -59,6 +69,13 @@ void	move_right(t_data *data, char sign)
 		BUFFER[i + 1] = BUFFER[i];
 	BUFFER[0] = sign;
 }
+
+/*
+** if # is present we run c(temp) through hash_flag
+** if prec > len (numbers get leading zeros | text is unchanged)
+** else if prec < len(number is unchaned | text gets truncateds)
+** lastly we add leading zeros if need be
+*/
 
 int		dot_validator(t_data *data, char **c, int *prec)
 {

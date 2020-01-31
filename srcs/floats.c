@@ -6,11 +6,15 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 19:17:41 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 12:03:59 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:16:54 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** in case of -0 we add a minus manually
+*/
 
 static void	add_minus(char **temp)
 {
@@ -19,6 +23,26 @@ static void	add_minus(char **temp)
 	(str = ft_strjoin("-", *temp));
 	ft_strdel(temp);
 	*temp = str;
+}
+
+/*
+** if minus hasn't been moved to the beginning we
+** search for '-' and set it to the start
+*/
+
+static void	move_minus(t_data *data, char *temp)
+{
+	int i;
+
+	i = 0;
+	if (temp[0] == '-' && BUFFER[0] != '-'
+		&& data->container.filler != ' ')
+	{
+		while (BUFFER[i] != '-')
+			i++;
+		BUFFER[i] = '0';
+		BUFFER[0] = '-';
+	}
 }
 
 static void	append_float_to_buffer(char *temp, t_data *data)
@@ -37,7 +61,7 @@ static void	lf_flag(t_data *data)
 
 	num = va_arg(data->arg, long double);
 	temp = ft_lf_itoa(num, data->precision);
-	if (1 / num < 0 && temp[0] != '-')
+	if (num < 0 && temp[0] != '-')
 		add_minus(&temp);
 	if (!(BUFFER) || data->size < (int)ft_strlen(temp))
 		append_float_to_buffer(temp, data);
@@ -60,7 +84,7 @@ void		f_flag(t_data *data)
 	else
 		num = va_arg(data->arg, double);
 	temp = ft_f_itoa(num, data->precision);
-	if (1 / num < 0 && temp[0] != '-')
+	if (num < 0 && temp[0] != '-')
 		add_minus(&temp);
 	if (!(BUFFER) || data->size < (int)ft_strlen(temp))
 		append_float_to_buffer(temp, data);
@@ -68,5 +92,6 @@ void		f_flag(t_data *data)
 		ft_fill(temp, data);
 	if (data->hash && data->precision == 0)
 		add_buffer_postfix(data, ".");
+	move_minus(data, temp);
 	data->ret += ft_strlen(BUFFER);
 }

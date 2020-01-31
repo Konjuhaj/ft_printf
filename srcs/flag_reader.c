@@ -6,11 +6,17 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 18:31:37 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:40:01 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** default filler is ' '
+** update sign to ' ' only if + isn't present
+** reset filler if left alligned
+*/
 
 int		is_flag(const char *s, t_data *data)
 {
@@ -38,7 +44,7 @@ int		is_width(const char *s, t_data *data)
 	if (*s == '*' || ft_isdigit(*s))
 	{
 		data->size = *s == '*' ? va_arg(data->arg, int) : ft_atoi(s);
-		data->i += ncount(data->size) - 1;
+		data->i += *s == '*' ? 1 : ncount(data->size) - 1;
 		return (1);
 	}
 	return (0);
@@ -59,6 +65,11 @@ int		is_precision(const char *s, t_data *data)
 	return (0);
 }
 
+/*
+** Add double flags to upper if
+** add single flags to lower if
+*/
+
 int		is_legth(const char *s, t_data *data)
 {
 	if ((s[0] == 'h' && s[1] == 'h')
@@ -76,6 +87,11 @@ int		is_legth(const char *s, t_data *data)
 	return (0);
 }
 
+/*
+** Add Number typeess to upper if
+** Add Text types to lower if
+*/
+
 int		is_type(const char *s, t_data *data)
 {
 	if (*s == 'd' || *s == 'i' || *s == 'u'
@@ -85,10 +101,12 @@ int		is_type(const char *s, t_data *data)
 	{
 		data->container.id = NUMBER;
 		data->type = *s;
+		data->size = data->precision > data->size ?
+					data->precision : data->size;
 		return (1);
 	}
 	else if (*s == 's' || *s == 'c' || *s == '%'
-			|| *s == 'S' || *s == 't' || *s == 'T')
+			|| *s == 't' || *s == 'T' || *s == 'S')
 	{
 		data->container.id = TEXT;
 		data->type = *s;

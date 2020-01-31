@@ -6,7 +6,7 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 17:30:36 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 18:32:44 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:47:30 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	capital_s_flag(t_data *data)
 		temp = ft_strjoin(BUFFER, str[j]);
 		free(BUFFER);
 		BUFFER = temp;
+		if (data->length == 'h' && str[j + 1] != NULL)
+			add_buffer_postfix(data, "\n");
 	}
 }
 

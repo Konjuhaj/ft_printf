@@ -6,31 +6,47 @@
 /*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 08:24:02 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/21 17:32:31 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:37:15 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** we don't add a prefic unless it's a pointer
+** if there are leading we add an x to the second index
+** else we add the appropriate prefix
+*/
 
 char	*hash_flag(char *s, t_data *data)
 {
 	char *temp;
 
 	temp = NULL;
-	if (s[0] == '0')
+	if (!ft_strcmp(s, "0") && data->type != 'p')
 		return (s);
 	else if (data->container.filler == '0')
-		BUFFER[1] = data->type;
-	else if (data->type == 'x' || data->type == 'X')
+	{
+		if (data->type == 'x')
+			BUFFER[1] = data->type;
+	}
+	else if (data->type == 'x' || data->type == 'X' || data->type == 'p')
 		temp = ft_strjoin("0x", s);
 	else if (data->type == 'o')
 		temp = ft_strjoin("0", s);
 	return (temp == NULL ? s : temp);
 }
 
+/*
+** Add leading zeros to temp by getting
+** the difference of temp and precision
+** if # is present we add a
+*/
+
 char	*dot_flag(char *c, t_data *data)
 {
 	char	*temp;
+	char	*prefix;
 	int		len;
 	int		padding;
 
@@ -40,8 +56,21 @@ char	*dot_flag(char *c, t_data *data)
 	data->container.filler = '0';
 	ft_memset(temp, data->container.filler, data->precision);
 	ft_strncpy(temp + padding, c, len);
+	if (data->hash == '#')
+	{
+		data->container.filler = 0;
+		prefix = hash_flag(temp, data);
+		temp = prefix;
+	}
 	return (temp);
 }
+
+/*
+** this fuction is called only if '-' is misplaced
+** replace '-' with a '0'
+** if precision is undefined leading zeros are are index 0
+** if there is no space to move right we append a '-'
+*/
 
 void	minus_flag(t_data *data, char sign)
 {
@@ -64,13 +93,18 @@ void	minus_flag(t_data *data, char sign)
 	}
 	else if (data->allign == '-' && data->precision < space)
 		move_right(data, sign);
-	else if ((BUFFER[0] != '0' && data->precision >= 0)
-			|| slen > data->precision
-			|| data->precision == -1)
+	else if (data->precision == -1)
 		BUFFER[0] = '-';
 	else if (BUFFER[0] == '0')
 		add_buffer_prefix("-", data);
 }
+
+/*
+** we only print a sign if there is no space to move_right
+**	or if we don't have leading spaces
+** else if left alligned ther must be space so we move it to the right
+** else is must be right aligned with leading spaces
+*/
 
 void	plus_flag(t_data *data, char sign, int len)
 {
