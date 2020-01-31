@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_reader.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkonjuha <bkonjuha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkonjuha <bkonjuha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 09:49:22 by bkonjuha          #+#    #+#             */
-/*   Updated: 2020/01/25 16:40:01 by bkonjuha         ###   ########.fr       */
+/*   Updated: 2020/01/31 22:05:22 by bkonjuha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int		is_type(const char *s, t_data *data)
 	{
 		data->container.id = NUMBER;
 		data->type = *s;
-		data->size = data->precision > data->size ?
-					data->precision : data->size;
 		return (1);
 	}
 	else if (*s == 's' || *s == 'c' || *s == '%'
